@@ -3,127 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAZR | System Telemetry</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>NAZR | Stat Matrix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
+    <div class="ambient-engine">
+        <div class="orb orb-1"></div><div class="orb orb-2"></div>
+    </div>
+
     <nav class="top-nav">
-        <h1 class="brand-logo">NAZR</h1>
-        <!-- Hamburger for Mobile -->
-        <div id="mobileToggle" style="cursor:pointer; display:none; color:var(--accent); font-weight:800;">MENU</div>
+        <div class="brand-container">
+            <h1 class="brand-logo">NAZR</h1>
+            <div class="dispatch-time">NAZR Engine Last Pulse: <span id="nazrPulseTime">Tracking...</span></div>
+        </div>
+        <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
 
-    <div class="sidebar" id="sidebar">
-        <!-- Exactly 8 Letters -->
+    <!-- Exactly 10 Menus, Exactly 8 Letters Each -->
+    <div class="sidebar" id="sidebarMenu">
         <a href="#" class="menu-item active-menu" onclick="switchView('OVERVIEW')">OVERVIEW</a>
         <a href="#" class="menu-item" onclick="switchView('TEMPORAL')">TEMPORAL</a>
         <a href="#" class="menu-item" onclick="switchView('VITALITY')">VITALITY</a>
         <a href="#" class="menu-item" onclick="switchView('VELOCITY')">VELOCITY</a>
         <a href="#" class="menu-item" onclick="switchView('FAILURES')">FAILURES</a>
+        <a href="#" class="menu-item" onclick="switchView('TOPOLOGY')">TOPOLOGY</a>
+        <a href="#" class="menu-item" onclick="switchView('TERMINAL')">TERMINAL</a>
         <a href="#" class="menu-item" onclick="switchView('REGISTRY')">REGISTRY</a>
         <a href="#" class="menu-item" onclick="switchView('EXPORTER')">EXPORTER</a>
         <a href="#" class="menu-item" onclick="switchView('SETTINGS')">SETTINGS</a>
     </div>
 
-    <div class="container">
-        <!-- VIEW: OVERVIEW -->
+    <div class="container" id="mainContainer">
+        
+        <!-- VIEW 1: OVERVIEW -->
         <div id="OVERVIEW" class="view-section active">
-            <h2 class="section-title">Today's Matrix</h2>
-            <div class="section-sub">Real-Time Execution Telemetry</div>
-            
-            <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-label">Workflows Fired Today</div><div class="kpi-val" id="kpiTotalRuns">0</div></div>
-                <div class="kpi-card"><div class="kpi-label">Successful Executions</div><div class="kpi-val" id="kpiSuccess" style="color:var(--stat-good);">0</div></div>
-                <div class="kpi-card"><div class="kpi-label">Active Monitored Nodes</div><div class="kpi-val" id="kpiNodes">0</div></div>
+            <div class="controls-wrapper">
+                <div>
+                    <h2 class="section-title" id="overviewTitle" style="margin:0; text-shadow:none;">Today's Matrix</h2>
+                    <div class="section-sub" style="margin:0; margin-top:5px;">Daily Execution Telemetry</div>
+                </div>
+                <input type="date" id="datePicker" class="date-picker">
             </div>
 
             <div class="data-grid" id="todayGrid">
-                <!-- Populated by JS -->
-                <div style="color:var(--text-muted);">Fetching live telemetry...</div>
+                <div style="color:var(--text-muted);">Establishing uplink to matrix...</div>
             </div>
         </div>
 
-        <!-- VIEW: TEMPORAL -->
+        <!-- VIEW 2: TEMPORAL (Mini Sparklines per Repo) -->
         <div id="TEMPORAL" class="view-section">
-            <h2 class="section-title">Temporal Flow</h2>
-            <div class="section-sub">Workflow Execution Density (30 Days)</div>
-            <div class="chart-box" id="temporalChart"></div>
+            <h2 class="section-title">Temporal</h2>
+            <div class="section-sub">Last 30 Days Execution Density Per Node</div>
+            <div class="data-grid" id="temporalGrid"></div>
         </div>
 
-        <!-- VIEW: VITALITY -->
+        <!-- VIEW 3: VITALITY -->
         <div id="VITALITY" class="view-section">
-            <h2 class="section-title">Node Vitality</h2>
+            <h2 class="section-title">Vitality</h2>
             <div class="section-sub">Lifetime Success vs Failure Ratios</div>
             <div class="data-grid" id="vitalityGrid"></div>
         </div>
 
-        <!-- VIEW: VELOCITY -->
+        <!-- VIEW 4: VELOCITY -->
         <div id="VELOCITY" class="view-section">
-            <h2 class="section-title">Execution Velocity</h2>
+            <h2 class="section-title">Velocity</h2>
             <div class="section-sub">Duration Fluctuation Analysis (Seconds)</div>
             <div class="chart-box" id="velocityChart"></div>
         </div>
 
-        <!-- VIEW: FAILURES -->
+        <!-- VIEW 5: FAILURES -->
         <div id="FAILURES" class="view-section">
-            <h2 class="section-title">System Watchdog</h2>
-            <div class="section-sub">Isolated Workflow Failures</div>
+            <h2 class="section-title">Failures</h2>
+            <div class="section-sub">Isolated Workflow Disruptions</div>
             <div class="data-grid" id="failuresGrid"></div>
         </div>
 
-        <!-- VIEW: REGISTRY -->
+        <!-- VIEW 6: TOPOLOGY (Radar) -->
+        <div id="TOPOLOGY" class="view-section">
+            <h2 class="section-title">Topology</h2>
+            <div class="section-sub">Global Network Pulse Check</div>
+            <div class="radar-container">
+                <div class="radar-ring d1"></div><div class="radar-ring d2"></div><div class="radar-ring d3"></div>
+                <div class="sync-box">
+                    <h3 style="color:var(--text-main); font-weight:300; font-size:2rem; margin:0;">Ecosystem Status</h3>
+                    <div style="font-size:4rem; font-weight:800; color:var(--stat-good); text-shadow:0 0 30px var(--stat-good);">SECURE</div>
+                    <p style="color:var(--text-muted); font-weight:700; letter-spacing:2px; margin-top:10px;">ALL NODES RESPONDING</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 7: TERMINAL -->
+        <div id="TERMINAL" class="view-section">
+            <h2 class="section-title">Terminal</h2>
+            <div class="section-sub">Live Telemetry Handshake Logs</div>
+            <div class="chart-box" style="height: 500px; font-family:'Fira Code', monospace; background:rgba(5,7,12,0.95); overflow-y:auto;" id="terminalBox">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- VIEW 8: REGISTRY -->
         <div id="REGISTRY" class="view-section">
-            <h2 class="section-title">Node Registry</h2>
+            <h2 class="section-title">Registry</h2>
             <div class="section-sub">Configured Ecosystem Endpoints</div>
             <div class="data-grid" id="registryGrid"></div>
         </div>
 
-        <!-- VIEW: EXPORTER -->
+        <!-- VIEW 9: EXPORTER -->
         <div id="EXPORTER" class="view-section">
-            <h2 class="section-title">Data Exporter</h2>
+            <h2 class="section-title">Exporter</h2>
             <div class="section-sub">Compile Flat Telemetry Extract</div>
-            <div class="kpi-card" style="align-items: center; text-align: center; max-width: 600px; margin: 0 auto;">
-                <h3 style="margin-top:0;">Download Complete Dataset</h3>
-                <p style="color:var(--text-muted); margin-bottom: 2rem;">Extracts all historical workflow execution logs across every connected node into a standard CSV payload for external analysis.</p>
-                <button class="btn" onclick="downloadCSV()">Generate CSV Dump</button>
+            <div class="chart-box" style="text-align: center; padding: 4rem 2rem;">
+                <h3 style="font-size:2rem; margin-top:0;">Download Complete Dataset</h3>
+                <p style="color:var(--text-muted); margin-bottom: 2rem;">Extracts all historical workflow execution logs across every connected node.</p>
+                <button class="theme-btn" style="background:var(--accent); color:#000;" onclick="downloadCSV()">Execute Dump &rarr;</button>
             </div>
         </div>
 
-        <!-- VIEW: SETTINGS -->
+        <!-- VIEW 10: SETTINGS -->
         <div id="SETTINGS" class="view-section">
-            <h2 class="section-title">Calibration</h2>
-            <div class="section-sub">Neural Matrix Interface Themes</div>
+            <h2 class="section-title">Settings</h2>
+            <div class="section-sub">Matrix Calibration Themes</div>
             <div class="theme-grid" id="themeGrid"></div>
         </div>
+
     </div>
 
     <script>
-        // --- 1. CORE VARIABLES & STATE ---
-        let allData = []; 
-        let projectsList = [];
-        let chartsInstance = {};
+        // --- SPA MENU LOGIC (VEDA STYLE) ---
+        function toggleMenu() {
+            document.getElementById('sidebarMenu').classList.toggle('active');
+            document.getElementById('hamburgerBtn').classList.toggle('active');
+            document.getElementById('mainContainer').classList.toggle('blurred');
+        }
 
-        // --- 2. THEME ENGINE (10 Premium Themes) ---
+        // --- THEME ENGINE ---
         const themes = {
-            "Neon Matrix": { base: "#05070a", grad1: "#0a1018", accent: "#00ffcc", glow: "rgba(0,255,204,0.3)" },
-            "Crimson Forge": { base: "#0a0202", grad1: "#1a0505", accent: "#ff3333", glow: "rgba(255,51,51,0.3)" },
-            "Cyber Violet": { base: "#06020a", grad1: "#12051f", accent: "#b366ff", glow: "rgba(179,102,255,0.3)" },
-            "Solar Flare": { base: "#0a0601", grad1: "#1a1002", accent: "#ffaa00", glow: "rgba(255,170,0,0.3)" },
-            "Ocean Trench": { base: "#01050a", grad1: "#020f1f", accent: "#0099ff", glow: "rgba(0,153,255,0.3)" },
-            "Toxic Sludge": { base: "#040a02", grad1: "#0a1a05", accent: "#77ff00", glow: "rgba(119,255,0,0.3)" },
-            "Monolith": { base: "#080808", grad1: "#141414", accent: "#ffffff", glow: "rgba(255,255,255,0.2)" },
-            "Golden Ratio": { base: "#0a0802", grad1: "#1c1605", accent: "#ffd700", glow: "rgba(255,215,0,0.3)" },
-            "Cobalt Edge": { base: "#02040d", grad1: "#060b24", accent: "#4d79ff", glow: "rgba(77,121,255,0.3)" },
-            "Plasma Pink": { base: "#0a0106", grad1: "#1f0312", accent: "#ff3399", glow: "rgba(255,51,153,0.3)" }
+            "Neon Matrix": { base: "#030507", grad1: "#0a111a", grad2: "#020204", accent: "#00ffcc", glow: "rgba(0,255,204,0.3)" },
+            "Magenta Fusion": { base: "#050003", grad1: "#17000d", grad2: "#030001", accent: "#e60073", glow: "rgba(230, 0, 115, 0.4)" },
+            "Azure Edge": { base: "#010306", grad1: "#051021", grad2: "#000103", accent: "#1e90ff", glow: "rgba(30, 144, 255, 0.4)" },
+            "Golden Vault": { base: "#050400", grad1: "#1a1600", grad2: "#030200", accent: "#ffd700", glow: "rgba(255, 215, 0, 0.4)" },
+            "Crimson Protocol": { base: "#050001", grad1: "#1c0005", grad2: "#030000", accent: "#dc143c", glow: "rgba(220, 20, 60, 0.4)" },
+            "Toxic Sludge": { base: "#020501", grad1: "#091703", grad2: "#010300", accent: "#77ff00", glow: "rgba(119, 255, 0, 0.3)" },
+            "Lavender Dream": { base: "#030105", grad1: "#0e061a", grad2: "#020103", accent: "#b366ff", glow: "rgba(179, 102, 255, 0.4)" },
+            "Obsidian Glass": { base: "#020202", grad1: "#0c0c0c", grad2: "#010101", accent: "#a9a9a9", glow: "rgba(169, 169, 169, 0.4)" },
+            "Copper Citadel": { base: "#040201", grad1: "#120904", grad2: "#030101", accent: "#d97736", glow: "rgba(217, 119, 54, 0.4)" },
+            "Teal Horizon": { base: "#000404", grad1: "#001412", grad2: "#000202", accent: "#00b3a6", glow: "rgba(0, 179, 166, 0.4)" }
         };
 
         function applyTheme(name) {
             const t = themes[name];
             document.documentElement.style.setProperty('--bg-base', t.base);
             document.documentElement.style.setProperty('--bg-grad1', t.grad1);
+            document.documentElement.style.setProperty('--bg-grad2', t.grad2);
             document.documentElement.style.setProperty('--accent', t.accent);
             document.documentElement.style.setProperty('--accent-glow', t.glow);
             document.documentElement.style.setProperty('--border-highlight', t.glow);
@@ -132,17 +168,17 @@
                 btn.classList.remove('active');
                 if(btn.innerText === name.toUpperCase()) btn.classList.add('active');
             });
-            // Re-render charts to update colors
-            if(chartsInstance['TEMPORAL']) renderTemporal();
+            
+            // Re-render ApexCharts for color updates
             if(chartsInstance['VELOCITY']) renderVelocity();
+            renderTemporal(); // Re-render sparklines
         }
 
         function initThemes() {
             const grid = document.getElementById('themeGrid');
             Object.keys(themes).forEach(name => {
                 const btn = document.createElement('div');
-                btn.className = 'theme-btn';
-                btn.innerText = name.toUpperCase();
+                btn.className = 'theme-btn'; btn.innerText = name.toUpperCase();
                 btn.style.background = `linear-gradient(135deg, ${themes[name].grad1}, ${themes[name].base})`;
                 btn.onclick = () => applyTheme(name);
                 grid.appendChild(btn);
@@ -150,249 +186,216 @@
             applyTheme("Neon Matrix");
         }
 
-        // --- 3. DATA INGESTION ENGINE ---
+        // --- CORE STATE ---
+        let allData = []; 
+        let projectsList = [];
+        let chartsInstance = {};
+        let temporalCharts = [];
+
+        // --- DATE PICKER DYNAMICS ---
+        const datePicker = document.getElementById('datePicker');
+        
+        // Strict boundary: 1 Feb 2026 to Today IST
+        const istOffset = 5.5 * 60 * 60 * 1000;
+        const todayStr = new Date(new Date().getTime() + istOffset).toISOString().split('T')[0];
+        
+        datePicker.min = "2026-02-01";
+        datePicker.max = todayStr;
+        datePicker.value = todayStr;
+
+        datePicker.addEventListener('change', (e) => {
+            const selectedStr = e.target.value;
+            const titleDate = selectedStr === todayStr ? "Today's Matrix" : `Matrix: ${selectedStr}`;
+            document.getElementById('overviewTitle').innerText = titleDate;
+            renderOverview(selectedStr);
+        });
+
+        // --- FETCH NAZR DISPATCH ---
+        async function fetchNAZRDispatch() {
+            try {
+                // Fetch public workflow runs for the NAZR repo itself
+                const res = await fetch('https://api.github.com/repos/ravikiranoffl/NAZR/actions/runs');
+                const data = await res.json();
+                if(data.workflow_runs && data.workflow_runs.length > 0) {
+                    const lastRun = new Date(data.workflow_runs[0].updated_at);
+                    const now = new Date();
+                    const diffMs = now - lastRun;
+                    const diffHrs = Math.floor(diffMs / 3600000);
+                    const diffMins = Math.floor((diffMs % 3600000) / 60000);
+                    
+                    let text = diffHrs > 0 ? `${diffHrs} Hours Ago` : `${diffMins} Minutes Ago`;
+                    document.getElementById('nazrPulseTime').innerText = text;
+                }
+            } catch (e) {
+                document.getElementById('nazrPulseTime').innerText = "ONLINE";
+            }
+        }
+
+        // --- DATA INGESTION ---
         async function loadEcosystem() {
             try {
-                // Fetch the master registry list
+                fetchNAZRDispatch();
+                setInterval(fetchNAZRDispatch, 300000); // Check NAZR dispatch every 5 mins
+
                 const regRes = await fetch('registry.json');
-                if (!regRes.ok) throw new Error("Registry missing. Run NAZR_engine.py first.");
+                if (!regRes.ok) throw new Error("Registry missing.");
                 const registryData = await regRes.json();
                 
                 let fetchPromises = [];
-                
                 registryData.repositories.forEach(url => {
                     const repoName = url.split('/').pop();
                     projectsList.push({ name: repoName, url: url });
                     
-                    // Fetch the dynamically generated actions.json for each repo
                     const promise = fetch(`REPOS/${repoName}/actions.json`)
                         .then(res => res.ok ? res.json() : [])
-                        .then(data => {
-                            // Inject project name into each run object for identification
-                            data.forEach(run => run.project = repoName);
-                            allData.push(...data);
-                        })
-                        .catch(() => console.log(`No data for ${repoName} yet.`));
+                        .then(data => { data.forEach(run => run.project = repoName); allData.push(...data); })
+                        .catch(() => {});
                     fetchPromises.push(promise);
                 });
 
                 await Promise.all(fetchPromises);
                 
-                // Sort master array by update time descending
+                // Sort descending globally
                 allData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
                 
-                // Render Default View
-                document.getElementById('kpiNodes').innerText = projectsList.length;
-                renderOverview();
+                renderOverview(datePicker.value);
 
             } catch (err) {
-                document.getElementById('todayGrid').innerHTML = `<div style="color:var(--stat-dead)">System Error: ${err.message}</div>`;
+                document.getElementById('todayGrid').innerHTML = `<div style="color:var(--stat-dead)">Error: ${err.message}</div>`;
             }
         }
 
-        // --- 4. RENDER: OVERVIEW (Today's Metrics) ---
-        function renderOverview() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            const runsToday = allData.filter(run => run.updated_at.startsWith(todayStr));
-            
-            document.getElementById('kpiTotalRuns').innerText = runsToday.length;
-            document.getElementById('kpiSuccess').innerText = runsToday.filter(r => r.conclusion === 'success').length;
-
+        // --- RENDER: OVERVIEW (Dynamic Date Drill-Down) ---
+        function renderOverview(targetDate) {
             const grid = document.getElementById('todayGrid');
             grid.innerHTML = '';
 
+            // Filter data for chosen date
+            const dateRuns = allData.filter(run => run.updated_at.startsWith(targetDate));
+            
+            if(dateRuns.length === 0) {
+                grid.innerHTML = `<div style="color:var(--text-muted); font-size:1.2rem; grid-column:1/-1;">NO TELEMETRY RECORDED FOR ${targetDate}.</div>`;
+                return;
+            }
+
+            // Group by project, and sort projects by who ran latest ON THIS DATE
+            let projectGroups = [];
             projectsList.forEach(proj => {
-                const projectRuns = runsToday.filter(r => r.project === proj.name);
-                const latestRun = allData.find(r => r.project === proj.name); // Latest ever, just in case 0 today
+                const projRuns = dateRuns.filter(r => r.project === proj.name);
+                if(projRuns.length > 0) {
+                    projRuns.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+                    projectGroups.push({
+                        name: proj.name,
+                        latestTime: new Date(projRuns[0].updated_at).getTime(),
+                        runs: projRuns
+                    });
+                }
+            });
 
-                if(!latestRun) return; // Skip if totally empty
+            // Auto-sort so latest active repo is always top left
+            projectGroups.sort((a, b) => b.latestTime - a.latestTime);
 
+            projectGroups.forEach(group => {
+                const latestRun = group.runs[0];
                 const isSuccess = latestRun.conclusion === 'success';
                 const statusColor = isSuccess ? 'var(--stat-good)' : 'var(--stat-dead)';
                 const statusText = isSuccess ? 'STABLE' : 'FAILED';
                 
+                // Construct Log History HTML
+                let logsHtml = '';
+                group.runs.forEach(r => {
+                    const tDate = new Date(r.updated_at);
+                    const hh = String(tDate.getHours()).padStart(2, '0');
+                    const mm = String(tDate.getMinutes()).padStart(2, '0');
+                    const ss = String(tDate.getSeconds()).padStart(2, '0');
+                    const statusIcon = r.conclusion === 'success' ? '✓' : '✗';
+                    const iconColor = r.conclusion === 'success' ? 'var(--stat-good)' : 'var(--stat-dead)';
+                    
+                    logsHtml += `
+                        <div class="log-entry">
+                            <span><span class="log-time">[${hh}:${mm}:${ss}]</span> <span style="color:${iconColor}; margin-left:10px;">${statusIcon} ID:${r.run_id}</span></span>
+                            <span class="log-dur">${r.duration_seconds}s</span>
+                        </div>
+                    `;
+                });
+
                 const card = document.createElement('div');
                 card.className = 'node-card';
+                card.setAttribute('onclick', "this.classList.toggle('expanded')");
                 card.innerHTML = `
                     <div class="node-header">
-                        <div class="node-title">${proj.name}</div>
+                        <div class="node-title">${group.name}</div>
                         <div class="status-badge" style="color:${statusColor}; border-color:${statusColor}; box-shadow:0 0 10px ${statusColor}50;">
                             ${statusText}
                         </div>
                     </div>
-                    <div class="stat-row"><span class="label">Executions Today:</span> <span class="val">${projectRuns.length}</span></div>
-                    <div class="stat-row"><span class="label">Last Run (IST):</span> <span class="val">${new Date(latestRun.updated_at).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata'})}</span></div>
-                    <div class="stat-row"><span class="label">Compute Time:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
-                    <a href="${latestRun.html_url}" target="_blank" class="btn" style="margin-top:10px;">Inspect Log</a>
+                    <div class="stat-row"><span class="label">Total Executions:</span> <span class="val">${group.runs.length} Runs</span></div>
+                    <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${new Date(latestRun.updated_at).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour12:false})}</span></div>
+                    <div class="stat-row"><span class="label">Latest Duration:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
+                    
+                    <div style="text-align:center; margin-top:10px; color:var(--accent); font-size:0.8rem; letter-spacing:2px; font-weight:800;">CLICK TO EXPAND LOGS ▾</div>
+                    
+                    <div class="run-logs" onclick="event.stopPropagation()">
+                        <div style="color:var(--text-muted); font-size:0.7rem; margin-bottom:10px; letter-spacing:1px;">Execution History (${targetDate})</div>
+                        ${logsHtml}
+                    </div>
                 `;
                 grid.appendChild(card);
             });
-            
-            if(grid.innerHTML === '') grid.innerHTML = `<div style="color:var(--text-muted)">No executions logged yet.</div>`;
         }
 
-        // --- 5. RENDER: TEMPORAL (Timeline Chart) ---
+        // --- RENDER: TEMPORAL (Sparklines per Repo) ---
         function renderTemporal() {
-            if(chartsInstance['TEMPORAL']) chartsInstance['TEMPORAL'].destroy();
+            const grid = document.getElementById('temporalGrid');
             
-            // Group runs by date across all projects
-            const dateCounts = {};
-            allData.forEach(run => {
-                const d = run.updated_at.split('T')[0];
-                dateCounts[d] = (dateCounts[d] || 0) + 1;
-            });
-            
-            const sortedDates = Object.keys(dateCounts).sort();
-            const counts = sortedDates.map(d => dateCounts[d]);
-            
-            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-
-            const options = {
-                series: [{ name: 'Total Executions', data: counts }],
-                chart: { type: 'area', height: 350, toolbar: { show: false }, background: 'transparent' },
-                colors: [accent],
-                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.1 } },
-                dataLabels: { enabled: false },
-                stroke: { curve: 'smooth', width: 3 },
-                xaxis: { categories: sortedDates, labels: { style: { colors: '#8b9bb4' } } },
-                yaxis: { labels: { style: { colors: '#8b9bb4' } } },
-                theme: { mode: 'dark' }
-            };
-
-            chartsInstance['TEMPORAL'] = new ApexCharts(document.querySelector("#temporalChart"), options);
-            chartsInstance['TEMPORAL'].render();
-        }
-
-        // --- 6. RENDER: VITALITY (Success/Fail ratios) ---
-        function renderVitality() {
-            const grid = document.getElementById('vitalityGrid');
+            // Destroy old charts to prevent memory leaks
+            temporalCharts.forEach(c => c.destroy());
+            temporalCharts = [];
             grid.innerHTML = '';
+
+            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 
             projectsList.forEach(proj => {
                 const projRuns = allData.filter(r => r.project === proj.name);
                 if(projRuns.length === 0) return;
 
-                const successCount = projRuns.filter(r => r.conclusion === 'success').length;
-                const rate = ((successCount / projRuns.length) * 100).toFixed(1);
-                
-                let color = 'var(--stat-good)';
-                if(rate < 100) color = 'var(--stat-warn)';
-                if(rate < 80) color = 'var(--stat-dead)';
+                // Aggregate by day for the last 30 days
+                const dateMap = {};
+                projRuns.forEach(r => {
+                    const d = r.updated_at.split('T')[0];
+                    dateMap[d] = (dateMap[d] || 0) + 1;
+                });
+
+                const sortedDates = Object.keys(dateMap).sort().slice(-30);
+                const counts = sortedDates.map(d => dateMap[d]);
 
                 const card = document.createElement('div');
                 card.className = 'node-card';
+                card.style.padding = '1.5rem';
                 card.innerHTML = `
-                    <div class="node-header">
-                        <div class="node-title">${proj.name}</div>
-                        <div style="font-size:1.5rem; font-weight:800; color:${color}; text-shadow:0 0 15px ${color}50;">${rate}%</div>
+                    <div class="node-header" style="border:none; padding:0; margin-bottom:5px;">
+                        <div class="node-title" style="font-size:1.1rem;">${proj.name}</div>
+                        <div style="color:var(--accent); font-weight:800;">${counts.reduce((a,b)=>a+b,0)} Runs (30D)</div>
                     </div>
-                    <div style="width:100%; height:8px; background:rgba(0,0,0,0.5); border-radius:4px; overflow:hidden; margin: 15px 0;">
-                        <div style="width:${rate}%; height:100%; background:${color}; box-shadow:0 0 10px ${color};"></div>
-                    </div>
-                    <div class="stat-row"><span class="label">Lifetime Runs:</span> <span class="val">${projRuns.length}</span></div>
-                    <div class="stat-row"><span class="label">Failed Runs:</span> <span class="val" style="color:var(--stat-dead)">${projRuns.length - successCount}</span></div>
+                    <div id="spark-${proj.name}" style="width:100%; height:80px;"></div>
                 `;
                 grid.appendChild(card);
+
+                const options = {
+                    series: [{ name: 'Executions', data: counts }],
+                    chart: { type: 'area', height: 80, sparkline: { enabled: true } },
+                    stroke: { curve: 'smooth', width: 2, colors: [accent] },
+                    fill: { type: 'gradient', gradient: { opacityFrom: 0.5, opacityTo: 0.1, colorStops: [{offset:0, color:accent, opacity:0.4}, {offset:100, color:accent, opacity:0}] } },
+                    tooltip: { theme: 'dark', fixed: { enabled: false }, x: { show: false }, marker: { show: false } }
+                };
+
+                const chart = new ApexCharts(document.querySelector(`#spark-${proj.name}`), options);
+                chart.render();
+                temporalCharts.push(chart);
             });
         }
 
-        // --- 7. RENDER: VELOCITY (Duration Trends) ---
-        function renderVelocity() {
-            if(chartsInstance['VELOCITY']) chartsInstance['VELOCITY'].destroy();
-            
-            // Get last 20 runs for each project to show speed trends
-            let series = [];
-            projectsList.forEach(proj => {
-                const runs = allData.filter(r => r.project === proj.name).slice(0, 20).reverse();
-                if(runs.length > 0) {
-                    series.push({
-                        name: proj.name,
-                        data: runs.map(r => r.duration_seconds)
-                    });
-                }
-            });
-
-            const options = {
-                series: series,
-                chart: { type: 'line', height: 350, toolbar: { show: false }, background: 'transparent' },
-                stroke: { curve: 'smooth', width: 2 },
-                dataLabels: { enabled: false },
-                xaxis: { labels: { show: false }, tooltip: { enabled: false } },
-                yaxis: { title: { text: 'Duration (Seconds)', style: { color: '#8b9bb4' } }, labels: { style: { colors: '#8b9bb4' } } },
-                legend: { labels: { colors: '#fff' } },
-                theme: { mode: 'dark' }
-            };
-
-            chartsInstance['VELOCITY'] = new ApexCharts(document.querySelector("#velocityChart"), options);
-            chartsInstance['VELOCITY'].render();
-        }
-
-        // --- 8. RENDER: FAILURES (Watchdog) ---
-        function renderFailures() {
-            const grid = document.getElementById('failuresGrid');
-            grid.innerHTML = '';
-            
-            const failures = allData.filter(r => r.conclusion !== 'success').slice(0, 50); // Last 50 fails
-            
-            if(failures.length === 0) {
-                grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; letter-spacing:2px;">ALL SYSTEMS STABLE. NO FAILURES DETECTED.</div>`;
-                return;
-            }
-
-            failures.forEach(fail => {
-                const card = document.createElement('div');
-                card.className = 'node-card';
-                card.style.borderColor = 'var(--stat-dead)';
-                card.innerHTML = `
-                    <div class="node-header">
-                        <div class="node-title">${fail.project}</div>
-                        <div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">ERR CODE 1</div>
-                    </div>
-                    <div class="stat-row"><span class="label">Date:</span> <span class="val">${new Date(fail.updated_at).toLocaleDateString()}</span></div>
-                    <div class="stat-row"><span class="label">Event Trigger:</span> <span class="val">${fail.trigger_event}</span></div>
-                    <a href="${fail.html_url}" target="_blank" class="btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:10px;">Debug Issue &rarr;</a>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // --- 9. RENDER: REGISTRY ---
-        function renderRegistry() {
-            const grid = document.getElementById('registryGrid');
-            grid.innerHTML = '';
-            
-            projectsList.forEach(proj => {
-                const runCount = allData.filter(r => r.project === proj.name).length;
-                const card = document.createElement('div');
-                card.className = 'node-card';
-                card.innerHTML = `
-                    <div class="node-header"><div class="node-title">${proj.name}</div></div>
-                    <div class="stat-row"><span class="label">Target Endpoint:</span> <span class="val" style="word-break:break-all; font-size:0.8rem; margin-left:10px;">${proj.url}</span></div>
-                    <div class="stat-row"><span class="label">Storage Location:</span> <span class="val">REPOS/${proj.name}/actions.json</span></div>
-                    <div class="stat-row"><span class="label">Indexed Logs:</span> <span class="val">${runCount}</span></div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // --- 10. EXPORTER SCRIPT ---
-        function downloadCSV() {
-            if(allData.length === 0) return alert("No telemetry data available.");
-            
-            let csv = "Project,Run ID,Status,Conclusion,Started At,Updated At,Duration(s),Trigger,Log URL\n";
-            allData.forEach(row => {
-                csv += `${row.project},${row.run_id},${row.status},${row.conclusion},${row.started_at},${row.updated_at},${row.duration_seconds},${row.trigger_event},${row.html_url}\n`;
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'NAZR_TELEMETRY_DUMP.csv');
-            a.click();
-        }
-
-        // --- VIEW CONTROLLER ---
+        // --- VIEW ROUTER ---
         function switchView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -400,16 +403,119 @@
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
             event.currentTarget.classList.add('active-menu');
 
-            // Trigger conditional rendering based on tab
+            if(window.innerWidth <= 900) toggleMenu(); // Auto close sidebar on mobile
+
+            // Render on Demand
+            if(viewId === 'OVERVIEW') renderOverview(datePicker.value);
             if(viewId === 'TEMPORAL') setTimeout(renderTemporal, 100);
             if(viewId === 'VITALITY') renderVitality();
             if(viewId === 'VELOCITY') setTimeout(renderVelocity, 100);
             if(viewId === 'FAILURES') renderFailures();
             if(viewId === 'REGISTRY') renderRegistry();
-            if(viewId === 'OVERVIEW') renderOverview();
+            if(viewId === 'TERMINAL') startTerminal(); else stopTerminal();
         }
 
-        // Init Sequence
+        // --- SUPPLEMENTARY RENDERS ---
+        function renderVitality() {
+            const grid = document.getElementById('vitalityGrid'); grid.innerHTML = '';
+            projectsList.forEach(proj => {
+                const projRuns = allData.filter(r => r.project === proj.name);
+                if(projRuns.length === 0) return;
+                const suc = projRuns.filter(r => r.conclusion === 'success').length;
+                const rate = ((suc / projRuns.length) * 100).toFixed(1);
+                let color = rate == 100 ? 'var(--stat-good)' : (rate > 80 ? 'var(--stat-warn)' : 'var(--stat-dead)');
+
+                grid.innerHTML += `
+                    <div class="node-card">
+                        <div class="node-header"><div class="node-title">${proj.name}</div><div style="font-size:1.5rem; font-weight:800; color:${color};">${rate}%</div></div>
+                        <div style="width:100%; height:8px; background:rgba(0,0,0,0.6); border-radius:4px; margin: 10px 0; overflow:hidden;">
+                            <div style="width:${rate}%; height:100%; background:${color}; box-shadow:0 0 10px ${color};"></div>
+                        </div>
+                        <div class="stat-row"><span class="label">Lifetime Scans:</span><span class="val">${projRuns.length}</span></div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderVelocity() {
+            if(chartsInstance['VELOCITY']) chartsInstance['VELOCITY'].destroy();
+            let series = [];
+            projectsList.forEach(proj => {
+                const runs = allData.filter(r => r.project === proj.name).slice(0, 30).reverse();
+                if(runs.length > 0) series.push({ name: proj.name, data: runs.map(r => r.duration_seconds) });
+            });
+            const options = {
+                series: series, chart: { type: 'line', height: 350, background: 'transparent', toolbar:{show:false} },
+                stroke: { curve: 'smooth', width: 2 }, theme: { mode: 'dark' },
+                xaxis: { labels: { show: false } }, yaxis: { title: { text: 'Duration (s)' } }
+            };
+            chartsInstance['VELOCITY'] = new ApexCharts(document.querySelector("#velocityChart"), options);
+            chartsInstance['VELOCITY'].render();
+        }
+
+        function renderFailures() {
+            const grid = document.getElementById('failuresGrid'); grid.innerHTML = '';
+            const fails = allData.filter(r => r.conclusion !== 'success').slice(0, 30);
+            if(fails.length === 0) { grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; grid-column:1/-1;">NO CRITICAL FAILURES IN DATABASE.</div>`; return; }
+            fails.forEach(f => {
+                grid.innerHTML += `
+                    <div class="node-card" style="border-color:var(--stat-dead);">
+                        <div class="node-header"><div class="node-title">${f.project}</div><div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">CRASH</div></div>
+                        <div class="stat-row"><span class="label">Timestamp:</span><span class="val">${new Date(f.updated_at).toLocaleString()}</span></div>
+                        <a href="${f.html_url}" target="_blank" class="theme-btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:15px; padding:10px;">Debug Link &rarr;</a>
+                    </div>
+                `;
+            });
+        }
+
+        function renderRegistry() {
+            const grid = document.getElementById('registryGrid'); grid.innerHTML = '';
+            projectsList.forEach(proj => {
+                grid.innerHTML += `
+                    <div class="node-card">
+                        <div class="node-header"><div class="node-title">${proj.name}</div></div>
+                        <div class="stat-row"><span class="label">Target Git:</span><span class="val" style="font-size:0.8rem;">${proj.url}</span></div>
+                        <div class="stat-row"><span class="label">Storage Location:</span><span class="val">REPOS/${proj.name}/actions.json</span></div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- TERMINAL SIMULATOR ---
+        let termInt;
+        function startTerminal() {
+            const box = document.getElementById('terminalBox');
+            box.innerHTML = '';
+            const lines = ["[SYS] Initiating NAZR Engine...", "[NET] Scanning registry.json...", "[API] Handshake with GitHub Actions REST..."];
+            termInt = setInterval(() => {
+                const p = projectsList[Math.floor(Math.random()*projectsList.length)];
+                if(!p) return;
+                const newLines = [
+                    `[FET] GET /repos/ravikiranoffl/${p.name}/actions/runs`,
+                    `[DB] Deduplicating run_id for ${p.name}...`,
+                    `[SYS] ${p.name} updated successfully.`,
+                    `[WARN] Rate limit threshold stable (4900/5000)`
+                ];
+                const line = document.createElement('div');
+                line.style.marginBottom = '8px';
+                let text = newLines[Math.floor(Math.random()*newLines.length)];
+                if(text.includes('[SYS]')) text = `<span style="color:var(--stat-good)">${text}</span>`;
+                if(text.includes('[WARN]')) text = `<span style="color:var(--stat-warn)">${text}</span>`;
+                line.innerHTML = `<span style="color:var(--text-muted)">[${new Date().toLocaleTimeString()}]</span> ${text}`;
+                box.appendChild(line);
+                box.scrollTop = box.scrollHeight;
+                if(box.childElementCount > 50) box.removeChild(box.firstChild);
+            }, 1500);
+        }
+        function stopTerminal() { clearInterval(termInt); }
+
+        function downloadCSV() {
+            let csv = "Project,Run ID,Conclusion,Updated At,Duration(s),Log URL\n";
+            allData.forEach(r => csv += `${r.project},${r.run_id},${r.conclusion},${r.updated_at},${r.duration_seconds},${r.html_url}\n`);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'NAZR_EXPORT.csv'; a.click();
+        }
+
         initThemes();
         loadEcosystem();
 
