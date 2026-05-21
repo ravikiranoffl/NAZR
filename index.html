@@ -19,11 +19,13 @@
             <h1 class="brand-logo">NAZR</h1>
             <div class="dispatch-time">Engine Pulse: <span id="nazrPulseTime">Tracking...</span></div>
         </div>
+        <!-- VEDA Style Hamburger on Right -->
         <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
     </nav>
 
+    <!-- Sidebar Slides From Right -->
     <div class="sidebar" id="sidebarMenu">
         <div class="sidebar-header">
             <div id="liveClock" class="live-clock">00:00:00</div>
@@ -52,6 +54,7 @@
                 </div>
                 <input type="date" id="datePicker" class="date-picker">
             </div>
+
             <div class="data-grid" id="todayGrid">
                 <div style="color:var(--text-muted);">Establishing uplink to matrix...</div>
             </div>
@@ -171,6 +174,32 @@
     </div>
 
     <script>
+        // --- SECURE IST TIME CONVERSION ENGINE ---
+        // Converts UTC to strict IST and breaks it into perfectly formatted components
+        function getISTParts(utcStr) {
+            const d = new Date(utcStr);
+            const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const formatter = new Intl.DateTimeFormat('en-GB', options);
+            const parts = formatter.formatToParts(d);
+            
+            let Y, M, D, h, m, s;
+            parts.forEach(p => {
+                if (p.type === 'year') Y = p.value;
+                if (p.type === 'month') M = p.value;
+                if (p.type === 'day') D = p.value;
+                if (p.type === 'hour') h = p.value;
+                if (p.type === 'minute') m = p.value;
+                if (p.type === 'second') s = p.value;
+            });
+            if (h === '24') h = '00'; // Browser edge-case fix
+
+            return { 
+                dateStrYYYY: `${Y}-${M}-${D}`, // Used for Data Grouping
+                dateStrDDMM: `${D}-${M}-${Y}`, // Used for UI Display
+                timeStr: `${h}:${m}:${s}`      // Exactly HH:MM:SS in IST
+            };
+        }
+
         // --- CLOCK ENGINE ---
         function updateClock() {
             const now = new Date();
@@ -182,14 +211,11 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // --- STRICT DD-MM-YYYY FORMATTER (IST Aware) ---
-        function formatStrictDate(dateString) {
-            const d = new Date(dateString);
-            if (isNaN(d)) return "N/A";
-            const day = String(d.getDate()).padStart(2, '0');
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const year = d.getFullYear();
-            return `${day}-${month}-${year}`;
+        // --- STRICT DD-MM-YYYY FORMATTER ---
+        function formatStrictDate(dateStringYYYY) {
+            const parts = dateStringYYYY.split('-');
+            if (parts.length !== 3) return dateStringYYYY;
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
         }
 
         // --- SPA MENU LOGIC ---
@@ -251,8 +277,9 @@
 
         // --- DATE PICKER DYNAMICS ---
         const datePicker = document.getElementById('datePicker');
-        const istOffset = 5.5 * 60 * 60 * 1000;
-        const todayStr = new Date(new Date().getTime() + istOffset).toISOString().split('T')[0];
+        const nowUtc = new Date();
+        const istParts = getISTParts(nowUtc.toISOString());
+        const todayStr = istParts.dateStrYYYY;
         
         datePicker.min = "2026-02-01";
         datePicker.max = todayStr;
@@ -312,12 +339,18 @@
                         .then(data => {
                             data.forEach(run => {
                                 run.project = repoName;
+                                
+                                // Permanently attach accurate IST mappings to the object
+                                const exactIST = getISTParts(run.updated_at);
+                                run.ist_date = exactIST.dateStrYYYY;
+                                run.ist_time = exactIST.timeStr;
+                                
                                 temporalData.push(run); // Temporal gets everything
                                 
                                 const isPages = (run.name && run.name.toLowerCase().includes('pages build')) || 
                                                 (run.trigger_event && run.trigger_event.toLowerCase() === 'page_build') ||
                                                 (run.html_url && run.html_url.toLowerCase().includes('pages'));
-                                if(!isPages) coreData.push(run); // Core metrics ignore pages
+                                if(!isPages) coreData.push(run); // Core ignores pages
                             });
                         })
                         .catch(() => {});
@@ -340,7 +373,7 @@
             const grid = document.getElementById('todayGrid');
             grid.innerHTML = '';
 
-            const dateRuns = coreData.filter(run => run.updated_at.startsWith(targetDate));
+            const dateRuns = coreData.filter(run => run.ist_date === targetDate);
             if(dateRuns.length === 0) {
                 grid.innerHTML = `<div style="color:var(--text-muted); font-size:1.2rem; grid-column:1/-1;">NO TELEMETRY RECORDED FOR ${formatStrictDate(targetDate)}.</div>`;
                 return;
@@ -363,25 +396,14 @@
                 
                 let logsHtml = '';
                 group.runs.forEach(r => {
-                    const tDate = new Date(r.updated_at);
-                    // Convert UTC to IST accurately
-                    const istDate = new Date(tDate.getTime() + (3600000 * 5.5));
-                    const hh = String(istDate.getHours()).padStart(2, '0');
-                    const mm = String(istDate.getMinutes()).padStart(2, '0');
-                    const ss = String(istDate.getSeconds()).padStart(2, '0');
                     const iconColor = r.conclusion === 'success' ? 'var(--stat-good)' : 'var(--stat-dead)';
                     logsHtml += `
                         <div class="log-entry">
-                            <span><span class="log-time">[${hh}:${mm}:${ss}]</span> <span style="color:${iconColor}; margin-left:10px;">${r.conclusion==='success'?'✓':'✗'} ID:${r.run_id}</span></span>
+                            <span><span class="log-time">[${r.ist_time}]</span> <span style="color:${iconColor}; margin-left:10px;">${r.conclusion==='success'?'✓':'✗'} ID:${r.run_id}</span></span>
                             <span class="log-dur">${r.duration_seconds}s</span>
                         </div>
                     `;
                 });
-
-                const latestIST = new Date(new Date(latestRun.updated_at).getTime() + (3600000 * 5.5));
-                const latestHH = String(latestIST.getHours()).padStart(2, '0');
-                const latestMM = String(latestIST.getMinutes()).padStart(2, '0');
-                const latestSS = String(latestIST.getSeconds()).padStart(2, '0');
 
                 const card = document.createElement('div');
                 card.className = 'node-card clickable';
@@ -392,7 +414,7 @@
                         <div class="status-badge" style="color:${statusColor}; border-color:${statusColor};">${isSuccess ? 'STABLE' : 'FAILED'}</div>
                     </div>
                     <div class="stat-row"><span class="label">Total Executions:</span> <span class="val">${group.runs.length} Runs</span></div>
-                    <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${latestHH}:${latestMM}:${latestSS}</span></div>
+                    <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${latestRun.ist_time}</span></div>
                     <div class="stat-row"><span class="label">Latest Duration:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
                     <div style="text-align:center; margin-top:10px; color:var(--accent); font-size:0.8rem; letter-spacing:2px; font-weight:800;">CLICK TO EXPAND LOGS ▾</div>
                     <div class="run-logs" onclick="event.stopPropagation()">
@@ -404,7 +426,7 @@
             });
         }
 
-        // --- RENDER: TEMPORAL (Uses temporalData WITH Pages) ---
+        // --- RENDER: TEMPORAL ---
         function renderTemporal() {
             const grid = document.getElementById('temporalGrid');
             const query = document.getElementById('temporalSearch').value.toLowerCase();
@@ -427,8 +449,7 @@
 
                 const dateMap = {};
                 projRuns.forEach(r => {
-                    const istDate = new Date(new Date(r.updated_at).getTime() + (3600000 * 5.5));
-                    const d = formatStrictDate(istDate.toISOString().split('T')[0]);
+                    const d = formatStrictDate(r.ist_date);
                     dateMap[d] = (dateMap[d] || 0) + 1;
                 });
 
@@ -517,11 +538,11 @@
             const fails = coreData.filter(r => r.conclusion !== 'success').slice(0, 30);
             if(fails.length === 0) { grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; grid-column:1/-1;">NO CRITICAL FAILURES DETECTED.</div>`; return; }
             fails.forEach(f => {
-                const istDate = new Date(new Date(f.updated_at).getTime() + (3600000 * 5.5));
                 grid.innerHTML += `
                     <div class="node-card" style="border-color:var(--stat-dead);">
                         <div class="node-header"><div class="node-title">${f.project}</div><div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">CRASH</div></div>
-                        <div class="stat-row"><span class="label">Date:</span><span class="val">${formatStrictDate(istDate.toISOString().split('T')[0])}</span></div>
+                        <div class="stat-row"><span class="label">Date:</span><span class="val">${formatStrictDate(f.ist_date)}</span></div>
+                        <div class="stat-row"><span class="label">Time (IST):</span><span class="val">${f.ist_time}</span></div>
                         <a href="${f.html_url}" target="_blank" class="btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:15px; width:100%;">Inspect Log</a>
                     </div>
                 `;
@@ -579,10 +600,9 @@
         function stopTerminal() { clearInterval(termInt); }
 
         function downloadCSV() {
-            let csv = "Project,Run ID,Conclusion,Date,Duration(s),Log URL\n";
+            let csv = "Project,Run ID,Conclusion,Date,Time(IST),Duration(s),Log URL\n";
             coreData.forEach(r => {
-                const istDate = new Date(new Date(r.updated_at).getTime() + (3600000 * 5.5));
-                csv += `${r.project},${r.run_id},${r.conclusion},${formatStrictDate(istDate.toISOString().split('T')[0])},${r.duration_seconds},${r.html_url}\n`;
+                csv += `${r.project},${r.run_id},${r.conclusion},${formatStrictDate(r.ist_date)},${r.ist_time},${r.duration_seconds},${r.html_url}\n`;
             });
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `NAZR_EXPORT_${formatStrictDate(todayStr)}.csv`; a.click();
