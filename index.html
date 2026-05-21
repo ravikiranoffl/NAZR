@@ -19,14 +19,16 @@
             <h1 class="brand-logo">NAZR</h1>
             <div class="dispatch-time">Engine Pulse: <span id="nazrPulseTime">Tracking...</span></div>
         </div>
-        <!-- VEDA Style Hamburger on Right -->
         <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
     </nav>
 
-    <!-- Sidebar Slides From Right -->
     <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-header">
+            <div id="liveClock" class="live-clock">00:00:00</div>
+            <div class="close-btn" onclick="toggleMenu()">&#10005;</div>
+        </div>
         <a href="#" class="menu-item active-menu" onclick="switchView('OVERVIEW')">OVERVIEW</a>
         <a href="#" class="menu-item" onclick="switchView('TEMPORAL')">TEMPORAL</a>
         <a href="#" class="menu-item" onclick="switchView('VITALITY')">VITALITY</a>
@@ -50,7 +52,6 @@
                 </div>
                 <input type="date" id="datePicker" class="date-picker">
             </div>
-
             <div class="data-grid" id="todayGrid">
                 <div style="color:var(--text-muted);">Establishing uplink to matrix...</div>
             </div>
@@ -79,7 +80,7 @@
             <div class="data-grid" id="vitalityGrid"></div>
         </div>
 
-        <!-- VIEW 4: VELOCITY (Cards) -->
+        <!-- VIEW 4: VELOCITY -->
         <div id="VELOCITY" class="view-section">
             <div class="header-flex">
                 <div>
@@ -170,7 +171,18 @@
     </div>
 
     <script>
-        // --- STRICT DD-MM-YYYY FORMATTER ---
+        // --- CLOCK ENGINE ---
+        function updateClock() {
+            const now = new Date();
+            const istTime = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (3600000 * 5.5));
+            const hh = String(istTime.getHours()).padStart(2, '0');
+            const mm = String(istTime.getMinutes()).padStart(2, '0');
+            const ss = String(istTime.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').innerText = `${hh}:${mm}:${ss}`;
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        // --- STRICT DD-MM-YYYY FORMATTER (IST Aware) ---
         function formatStrictDate(dateString) {
             const d = new Date(dateString);
             if (isNaN(d)) return "N/A";
@@ -214,23 +226,26 @@
                 btn.classList.remove('active');
                 if(btn.innerText === name.toUpperCase()) btn.classList.add('active');
             });
-            renderTemporal(); // Update chart colors instantly
+            if(document.getElementById('TEMPORAL').classList.contains('active')) renderTemporal(); 
         }
 
         function initThemes() {
             const grid = document.getElementById('themeGrid');
-            Object.keys(themes).forEach(name => {
+            const themeKeys = Object.keys(themes);
+            themeKeys.forEach(name => {
                 const btn = document.createElement('div');
                 btn.className = 'theme-btn'; btn.innerText = name.toUpperCase();
                 btn.style.background = `linear-gradient(135deg, ${themes[name].grad1}, ${themes[name].base})`;
                 btn.onclick = () => applyTheme(name);
                 grid.appendChild(btn);
             });
-            applyTheme("Neon Matrix");
+            const randomTheme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+            applyTheme(randomTheme);
         }
 
         // --- CORE STATE ---
-        let allData = []; 
+        let coreData = [];      // WITHOUT Pages Build
+        let temporalData = [];  // WITH Pages Build
         let projectsList = [];
         let temporalCharts = [];
 
@@ -252,13 +267,20 @@
             renderOverview(selectedStr);
         });
 
-        // --- FETCH NAZR DISPATCH ---
+        // --- FETCH NAZR DISPATCH (NON-PAGES ONLY) ---
         async function fetchNAZRDispatch() {
             try {
                 const res = await fetch('https://api.github.com/repos/ravikiranoffl/NAZR/actions/runs');
                 const data = await res.json();
-                if(data.workflow_runs && data.workflow_runs.length > 0) {
-                    const lastRun = new Date(data.workflow_runs[0].updated_at);
+                
+                const validRuns = data.workflow_runs.filter(r => {
+                    const isPages = (r.name && r.name.toLowerCase().includes('pages build')) || 
+                                    (r.event && r.event.toLowerCase() === 'page_build');
+                    return !isPages;
+                });
+
+                if(validRuns && validRuns.length > 0) {
+                    const lastRun = new Date(validRuns[0].updated_at);
                     const now = new Date();
                     const diffMs = now - lastRun;
                     const diffHrs = Math.floor(diffMs / 3600000);
@@ -270,7 +292,7 @@
             }
         }
 
-        // --- DATA INGESTION (WITH PAGES FILTER) ---
+        // --- DATA INGESTION ---
         async function loadEcosystem() {
             try {
                 fetchNAZRDispatch();
@@ -288,22 +310,23 @@
                     const promise = fetch(`REPOS/${repoName}/actions.json`)
                         .then(res => res.ok ? res.json() : [])
                         .then(data => {
-                            // IGNORE PAGES BUILD DEPLOYMENT
-                            const filteredData = data.filter(r => {
-                                const isPages = (r.name && r.name.toLowerCase().includes('pages build')) || 
-                                                (r.trigger_event && r.trigger_event.toLowerCase() === 'page_build') ||
-                                                (r.html_url && r.html_url.toLowerCase().includes('pages'));
-                                return !isPages;
+                            data.forEach(run => {
+                                run.project = repoName;
+                                temporalData.push(run); // Temporal gets everything
+                                
+                                const isPages = (run.name && run.name.toLowerCase().includes('pages build')) || 
+                                                (run.trigger_event && run.trigger_event.toLowerCase() === 'page_build') ||
+                                                (run.html_url && run.html_url.toLowerCase().includes('pages'));
+                                if(!isPages) coreData.push(run); // Core metrics ignore pages
                             });
-                            filteredData.forEach(run => run.project = repoName); 
-                            allData.push(...filteredData); 
                         })
                         .catch(() => {});
                     fetchPromises.push(promise);
                 });
 
                 await Promise.all(fetchPromises);
-                allData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+                coreData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+                temporalData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
                 
                 renderOverview(datePicker.value);
 
@@ -317,7 +340,7 @@
             const grid = document.getElementById('todayGrid');
             grid.innerHTML = '';
 
-            const dateRuns = allData.filter(run => run.updated_at.startsWith(targetDate));
+            const dateRuns = coreData.filter(run => run.updated_at.startsWith(targetDate));
             if(dateRuns.length === 0) {
                 grid.innerHTML = `<div style="color:var(--text-muted); font-size:1.2rem; grid-column:1/-1;">NO TELEMETRY RECORDED FOR ${formatStrictDate(targetDate)}.</div>`;
                 return;
@@ -341,9 +364,11 @@
                 let logsHtml = '';
                 group.runs.forEach(r => {
                     const tDate = new Date(r.updated_at);
-                    const hh = String(tDate.getHours()).padStart(2, '0');
-                    const mm = String(tDate.getMinutes()).padStart(2, '0');
-                    const ss = String(tDate.getSeconds()).padStart(2, '0');
+                    // Convert UTC to IST accurately
+                    const istDate = new Date(tDate.getTime() + (3600000 * 5.5));
+                    const hh = String(istDate.getHours()).padStart(2, '0');
+                    const mm = String(istDate.getMinutes()).padStart(2, '0');
+                    const ss = String(istDate.getSeconds()).padStart(2, '0');
                     const iconColor = r.conclusion === 'success' ? 'var(--stat-good)' : 'var(--stat-dead)';
                     logsHtml += `
                         <div class="log-entry">
@@ -352,6 +377,11 @@
                         </div>
                     `;
                 });
+
+                const latestIST = new Date(new Date(latestRun.updated_at).getTime() + (3600000 * 5.5));
+                const latestHH = String(latestIST.getHours()).padStart(2, '0');
+                const latestMM = String(latestIST.getMinutes()).padStart(2, '0');
+                const latestSS = String(latestIST.getSeconds()).padStart(2, '0');
 
                 const card = document.createElement('div');
                 card.className = 'node-card clickable';
@@ -362,7 +392,7 @@
                         <div class="status-badge" style="color:${statusColor}; border-color:${statusColor};">${isSuccess ? 'STABLE' : 'FAILED'}</div>
                     </div>
                     <div class="stat-row"><span class="label">Total Executions:</span> <span class="val">${group.runs.length} Runs</span></div>
-                    <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${new Date(latestRun.updated_at).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour12:false})}</span></div>
+                    <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${latestHH}:${latestMM}:${latestSS}</span></div>
                     <div class="stat-row"><span class="label">Latest Duration:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
                     <div style="text-align:center; margin-top:10px; color:var(--accent); font-size:0.8rem; letter-spacing:2px; font-weight:800;">CLICK TO EXPAND LOGS ▾</div>
                     <div class="run-logs" onclick="event.stopPropagation()">
@@ -374,7 +404,7 @@
             });
         }
 
-        // --- RENDER: TEMPORAL (With Search Filter) ---
+        // --- RENDER: TEMPORAL (Uses temporalData WITH Pages) ---
         function renderTemporal() {
             const grid = document.getElementById('temporalGrid');
             const query = document.getElementById('temporalSearch').value.toLowerCase();
@@ -392,12 +422,13 @@
             }
 
             filteredProjects.forEach(proj => {
-                const projRuns = allData.filter(r => r.project === proj.name);
+                const projRuns = temporalData.filter(r => r.project === proj.name);
                 if(projRuns.length === 0) return;
 
                 const dateMap = {};
                 projRuns.forEach(r => {
-                    const d = formatStrictDate(r.updated_at.split('T')[0]);
+                    const istDate = new Date(new Date(r.updated_at).getTime() + (3600000 * 5.5));
+                    const d = formatStrictDate(istDate.toISOString().split('T')[0]);
                     dateMap[d] = (dateMap[d] || 0) + 1;
                 });
 
@@ -432,7 +463,7 @@
         function renderVitality() {
             const grid = document.getElementById('vitalityGrid'); grid.innerHTML = '';
             projectsList.forEach(proj => {
-                const projRuns = allData.filter(r => r.project === proj.name);
+                const projRuns = coreData.filter(r => r.project === proj.name);
                 if(projRuns.length === 0) return;
                 const suc = projRuns.filter(r => r.conclusion === 'success').length;
                 const rate = ((suc / projRuns.length) * 100).toFixed(1);
@@ -450,11 +481,11 @@
             });
         }
 
-        // --- RENDER: VELOCITY (Cards Overhaul) ---
+        // --- RENDER: VELOCITY ---
         function renderVelocity() {
             const grid = document.getElementById('velocityGrid'); grid.innerHTML = '';
             projectsList.forEach(proj => {
-                const projRuns = allData.filter(r => r.project === proj.name);
+                const projRuns = coreData.filter(r => r.project === proj.name);
                 if(projRuns.length === 0) return;
                 
                 let min = Infinity, max = 0, sum = 0;
@@ -483,13 +514,14 @@
         // --- RENDER: FAILURES ---
         function renderFailures() {
             const grid = document.getElementById('failuresGrid'); grid.innerHTML = '';
-            const fails = allData.filter(r => r.conclusion !== 'success').slice(0, 30);
+            const fails = coreData.filter(r => r.conclusion !== 'success').slice(0, 30);
             if(fails.length === 0) { grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; grid-column:1/-1;">NO CRITICAL FAILURES DETECTED.</div>`; return; }
             fails.forEach(f => {
+                const istDate = new Date(new Date(f.updated_at).getTime() + (3600000 * 5.5));
                 grid.innerHTML += `
                     <div class="node-card" style="border-color:var(--stat-dead);">
                         <div class="node-header"><div class="node-title">${f.project}</div><div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">CRASH</div></div>
-                        <div class="stat-row"><span class="label">Date:</span><span class="val">${formatStrictDate(f.updated_at.split('T')[0])}</span></div>
+                        <div class="stat-row"><span class="label">Date:</span><span class="val">${formatStrictDate(istDate.toISOString().split('T')[0])}</span></div>
                         <a href="${f.html_url}" target="_blank" class="btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:15px; width:100%;">Inspect Log</a>
                     </div>
                 `;
@@ -503,7 +535,7 @@
                 grid.innerHTML += `
                     <div class="node-card">
                         <div class="node-header"><div class="node-title">${proj.name}</div></div>
-                        <div class="stat-row"><span class="label">Target Git:</span><span class="val" style="font-size:0.8rem;">${proj.url}</span></div>
+                        <div class="stat-row"><span class="label">Target Git:</span><span class="val" style="font-size:0.8rem; word-break:break-all;">${proj.url}</span></div>
                         <div class="stat-row"><span class="label">Storage Path:</span><span class="val">REPOS/${proj.name}/actions.json</span></div>
                         <a href="${proj.url}" target="_blank" class="btn" style="margin-top:15px; width:100%;">View Source</a>
                     </div>
@@ -531,7 +563,14 @@
                 let text = newLines[Math.floor(Math.random()*newLines.length)];
                 if(text.includes('[SYS]')) text = `<span style="color:var(--stat-good)">${text}</span>`;
                 if(text.includes('[WARN]')) text = `<span style="color:var(--stat-warn)">${text}</span>`;
-                line.innerHTML = `<span style="color:var(--text-muted)">[${new Date().toLocaleTimeString()}]</span> ${text}`;
+                
+                const now = new Date();
+                const istTime = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (3600000 * 5.5));
+                const hh = String(istTime.getHours()).padStart(2, '0');
+                const mm = String(istTime.getMinutes()).padStart(2, '0');
+                const ss = String(istTime.getSeconds()).padStart(2, '0');
+
+                line.innerHTML = `<span style="color:var(--text-muted)">[${hh}:${mm}:${ss}]</span> ${text}`;
                 box.appendChild(line);
                 box.scrollTop = box.scrollHeight;
                 if(box.childElementCount > 50) box.removeChild(box.firstChild);
@@ -541,7 +580,10 @@
 
         function downloadCSV() {
             let csv = "Project,Run ID,Conclusion,Date,Duration(s),Log URL\n";
-            allData.forEach(r => csv += `${r.project},${r.run_id},${r.conclusion},${formatStrictDate(r.updated_at.split('T')[0])},${r.duration_seconds},${r.html_url}\n`);
+            coreData.forEach(r => {
+                const istDate = new Date(new Date(r.updated_at).getTime() + (3600000 * 5.5));
+                csv += `${r.project},${r.run_id},${r.conclusion},${formatStrictDate(istDate.toISOString().split('T')[0])},${r.duration_seconds},${r.html_url}\n`;
+            });
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `NAZR_EXPORT_${formatStrictDate(todayStr)}.csv`; a.click();
         }
