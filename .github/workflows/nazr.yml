@@ -24,7 +24,7 @@ jobs:
 
       - name: Execute Reconnaissance Engine
         env:
-          NAZR_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NAZR_GITHUB_TOKEN: ${{ secrets.NAZR_API_TOKEN }}
         run: python main.py
 
       - name: Process Atomic Commits per Repository
