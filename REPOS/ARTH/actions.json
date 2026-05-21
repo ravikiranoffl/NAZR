@@ -1,0 +1,102 @@
+[
+  {
+    "run_id": 26220260299,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T10:24:17Z",
+    "updated_at": "2026-05-21T10:24:36Z",
+    "duration_seconds": 19,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26220260299"
+  },
+  {
+    "run_id": 26186264140,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T19:52:44Z",
+    "updated_at": "2026-05-20T19:53:04Z",
+    "duration_seconds": 20,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26186264140"
+  },
+  {
+    "run_id": 26155520570,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T10:02:57Z",
+    "updated_at": "2026-05-20T10:03:19Z",
+    "duration_seconds": 22,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26155520570"
+  },
+  {
+    "run_id": 26120208090,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T19:28:24Z",
+    "updated_at": "2026-05-19T19:28:47Z",
+    "duration_seconds": 23,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26120208090"
+  },
+  {
+    "run_id": 26091331321,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T10:25:59Z",
+    "updated_at": "2026-05-19T10:26:16Z",
+    "duration_seconds": 17,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26091331321"
+  },
+  {
+    "run_id": 26054614478,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T19:09:09Z",
+    "updated_at": "2026-05-18T19:09:31Z",
+    "duration_seconds": 22,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26054614478"
+  },
+  {
+    "run_id": 26049124548,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T17:22:12Z",
+    "updated_at": "2026-05-18T17:22:36Z",
+    "duration_seconds": 24,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26049124548"
+  },
+  {
+    "run_id": 26021147032,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T08:03:32Z",
+    "updated_at": "2026-05-18T08:03:53Z",
+    "duration_seconds": 21,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26021147032"
+  },
+  {
+    "run_id": 26001700312,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-17T20:22:04Z",
+    "updated_at": "2026-05-17T20:22:23Z",
+    "duration_seconds": 19,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26001700312"
+  },
+  {
+    "run_id": 26001550844,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-17T20:15:28Z",
+    "updated_at": "2026-05-17T20:15:46Z",
+    "duration_seconds": 18,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/26001550844"
+  }
+]
