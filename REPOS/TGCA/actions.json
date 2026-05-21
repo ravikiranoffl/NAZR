@@ -1,0 +1,302 @@
+[
+  {
+    "run_id": 26242500889,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T17:34:19Z",
+    "updated_at": "2026-05-21T17:37:03Z",
+    "duration_seconds": 164,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26242500889"
+  },
+  {
+    "run_id": 26196268184,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T23:37:36Z",
+    "updated_at": "2026-05-20T23:40:12Z",
+    "duration_seconds": 156,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26196268184"
+  },
+  {
+    "run_id": 26180611623,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T18:01:39Z",
+    "updated_at": "2026-05-20T18:09:18Z",
+    "duration_seconds": 459,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26180611623"
+  },
+  {
+    "run_id": 26131182609,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T23:18:45Z",
+    "updated_at": "2026-05-19T23:21:57Z",
+    "duration_seconds": 192,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26131182609"
+  },
+  {
+    "run_id": 26114603425,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T17:41:46Z",
+    "updated_at": "2026-05-19T17:48:35Z",
+    "duration_seconds": 409,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26114603425"
+  },
+  {
+    "run_id": 26066022100,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T23:17:00Z",
+    "updated_at": "2026-05-18T23:21:44Z",
+    "duration_seconds": 284,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26066022100"
+  },
+  {
+    "run_id": 26049859751,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T17:36:36Z",
+    "updated_at": "2026-05-18T17:41:22Z",
+    "duration_seconds": 286,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26049859751"
+  },
+  {
+    "run_id": 26005424529,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-17T23:08:43Z",
+    "updated_at": "2026-05-17T23:10:45Z",
+    "duration_seconds": 122,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/26005424529"
+  },
+  {
+    "run_id": 25995955235,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-17T16:10:33Z",
+    "updated_at": "2026-05-17T22:10:51Z",
+    "duration_seconds": 21618,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25995955235"
+  },
+  {
+    "run_id": 25975308629,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-16T23:03:09Z",
+    "updated_at": "2026-05-16T23:06:15Z",
+    "duration_seconds": 186,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25975308629"
+  },
+  {
+    "run_id": 25966598024,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-16T16:08:21Z",
+    "updated_at": "2026-05-16T16:10:53Z",
+    "duration_seconds": 152,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25966598024"
+  },
+  {
+    "run_id": 25945701162,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-15T23:09:18Z",
+    "updated_at": "2026-05-15T23:11:45Z",
+    "duration_seconds": 147,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25945701162"
+  },
+  {
+    "run_id": 25930565461,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-15T17:00:53Z",
+    "updated_at": "2026-05-15T17:04:32Z",
+    "duration_seconds": 219,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25930565461"
+  },
+  {
+    "run_id": 25890873570,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-14T23:09:26Z",
+    "updated_at": "2026-05-14T23:12:03Z",
+    "duration_seconds": 157,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25890873570"
+  },
+  {
+    "run_id": 25874159716,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-14T17:12:39Z",
+    "updated_at": "2026-05-14T17:15:52Z",
+    "duration_seconds": 193,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25874159716"
+  },
+  {
+    "run_id": 25831992615,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-13T23:18:20Z",
+    "updated_at": "2026-05-13T23:25:31Z",
+    "duration_seconds": 431,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25831992615"
+  },
+  {
+    "run_id": 25815185471,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-13T17:23:44Z",
+    "updated_at": "2026-05-13T17:26:47Z",
+    "duration_seconds": 183,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25815185471"
+  },
+  {
+    "run_id": 25767811796,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-12T23:15:23Z",
+    "updated_at": "2026-05-12T23:18:54Z",
+    "duration_seconds": 211,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25767811796"
+  },
+  {
+    "run_id": 25752765116,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-12T18:02:00Z",
+    "updated_at": "2026-05-12T18:04:44Z",
+    "duration_seconds": 164,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25752765116"
+  },
+  {
+    "run_id": 25751413949,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-12T17:35:57Z",
+    "updated_at": "2026-05-12T17:39:13Z",
+    "duration_seconds": 196,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25751413949"
+  },
+  {
+    "run_id": 25710179279,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-12T02:46:51Z",
+    "updated_at": "2026-05-12T02:50:30Z",
+    "duration_seconds": 219,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25710179279"
+  },
+  {
+    "run_id": 25686550933,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-11T17:35:14Z",
+    "updated_at": "2026-05-11T23:40:21Z",
+    "duration_seconds": 21907,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25686550933"
+  },
+  {
+    "run_id": 25633961202,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-10T16:33:35Z",
+    "updated_at": "2026-05-10T16:36:01Z",
+    "duration_seconds": 146,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25633961202"
+  },
+  {
+    "run_id": 25606104721,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-09T16:33:09Z",
+    "updated_at": "2026-05-09T16:40:29Z",
+    "duration_seconds": 440,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25606104721"
+  },
+  {
+    "run_id": 25568190831,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-08T16:54:42Z",
+    "updated_at": "2026-05-08T17:00:00Z",
+    "duration_seconds": 318,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25568190831"
+  },
+  {
+    "run_id": 25530410672,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-08T00:54:22Z",
+    "updated_at": "2026-05-08T01:02:56Z",
+    "duration_seconds": 514,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25530410672"
+  },
+  {
+    "run_id": 25511320194,
+    "status": "completed",
+    "conclusion": "failure",
+    "started_at": "2026-05-07T17:22:21Z",
+    "updated_at": "2026-05-07T17:31:20Z",
+    "duration_seconds": 539,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25511320194"
+  },
+  {
+    "run_id": 25449849232,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-06T17:09:45Z",
+    "updated_at": "2026-05-06T17:14:04Z",
+    "duration_seconds": 259,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25449849232"
+  },
+  {
+    "run_id": 25448820005,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-06T16:48:44Z",
+    "updated_at": "2026-05-06T16:53:11Z",
+    "duration_seconds": 267,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25448820005"
+  },
+  {
+    "run_id": 25390765688,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-05T17:07:12Z",
+    "updated_at": "2026-05-05T17:09:47Z",
+    "duration_seconds": 155,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/25390765688"
+  }
+]
