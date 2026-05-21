@@ -1,0 +1,302 @@
+[
+  {
+    "run_id": 26209015135,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T06:16:27Z",
+    "updated_at": "2026-05-21T06:16:59Z",
+    "duration_seconds": 32,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/26209015135"
+  },
+  {
+    "run_id": 26145005484,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T06:15:07Z",
+    "updated_at": "2026-05-20T06:15:19Z",
+    "duration_seconds": 12,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/26145005484"
+  },
+  {
+    "run_id": 26079839921,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T06:15:02Z",
+    "updated_at": "2026-05-19T06:15:15Z",
+    "duration_seconds": 13,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/26079839921"
+  },
+  {
+    "run_id": 26017016806,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T06:20:27Z",
+    "updated_at": "2026-05-18T06:20:39Z",
+    "duration_seconds": 12,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/26017016806"
+  },
+  {
+    "run_id": 25982862143,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-17T05:54:05Z",
+    "updated_at": "2026-05-17T05:54:18Z",
+    "duration_seconds": 13,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25982862143"
+  },
+  {
+    "run_id": 25953949202,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-16T05:32:03Z",
+    "updated_at": "2026-05-16T05:32:18Z",
+    "duration_seconds": 15,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25953949202"
+  },
+  {
+    "run_id": 25902991687,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-15T06:00:06Z",
+    "updated_at": "2026-05-15T06:00:22Z",
+    "duration_seconds": 16,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25902991687"
+  },
+  {
+    "run_id": 25844359162,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-14T05:53:13Z",
+    "updated_at": "2026-05-14T05:53:28Z",
+    "duration_seconds": 15,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25844359162"
+  },
+  {
+    "run_id": 25781183249,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-13T05:54:18Z",
+    "updated_at": "2026-05-13T05:54:28Z",
+    "duration_seconds": 10,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25781183249"
+  },
+  {
+    "run_id": 25715887290,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-12T05:43:38Z",
+    "updated_at": "2026-05-12T05:43:48Z",
+    "duration_seconds": 10,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25715887290"
+  },
+  {
+    "run_id": 25653249657,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-11T06:04:28Z",
+    "updated_at": "2026-05-11T06:04:50Z",
+    "duration_seconds": 22,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25653249657"
+  },
+  {
+    "run_id": 25621021680,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-10T05:42:13Z",
+    "updated_at": "2026-05-10T05:42:28Z",
+    "duration_seconds": 15,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25621021680"
+  },
+  {
+    "run_id": 25592874802,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-09T05:26:42Z",
+    "updated_at": "2026-05-09T05:26:58Z",
+    "duration_seconds": 16,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25592874802"
+  },
+  {
+    "run_id": 25537643370,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-08T04:57:10Z",
+    "updated_at": "2026-05-08T04:57:20Z",
+    "duration_seconds": 10,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25537643370"
+  },
+  {
+    "run_id": 25477982925,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-07T05:37:06Z",
+    "updated_at": "2026-05-07T05:37:18Z",
+    "duration_seconds": 12,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25477982925"
+  },
+  {
+    "run_id": 25418365252,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-06T05:34:47Z",
+    "updated_at": "2026-05-06T05:35:14Z",
+    "duration_seconds": 27,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25418365252"
+  },
+  {
+    "run_id": 25359286345,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-05T05:19:49Z",
+    "updated_at": "2026-05-05T05:20:02Z",
+    "duration_seconds": 13,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25359286345"
+  },
+  {
+    "run_id": 25303004468,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-04T05:40:33Z",
+    "updated_at": "2026-05-04T05:40:51Z",
+    "duration_seconds": 18,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25303004468"
+  },
+  {
+    "run_id": 25271023875,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-03T05:35:48Z",
+    "updated_at": "2026-05-03T05:35:58Z",
+    "duration_seconds": 10,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25271023875"
+  },
+  {
+    "run_id": 25269859094,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-03T04:28:57Z",
+    "updated_at": "2026-05-03T04:29:12Z",
+    "duration_seconds": 15,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25269859094"
+  },
+  {
+    "run_id": 25269421728,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-03T04:04:28Z",
+    "updated_at": "2026-05-03T04:05:42Z",
+    "duration_seconds": 74,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25269421728"
+  },
+  {
+    "run_id": 25257243469,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-02T17:08:50Z",
+    "updated_at": "2026-05-02T17:09:10Z",
+    "duration_seconds": 20,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25257243469"
+  },
+  {
+    "run_id": 25244574561,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-02T05:16:25Z",
+    "updated_at": "2026-05-02T05:16:41Z",
+    "duration_seconds": 16,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25244574561"
+  },
+  {
+    "run_id": 25204088050,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-01T05:47:10Z",
+    "updated_at": "2026-05-01T05:47:28Z",
+    "duration_seconds": 18,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25204088050"
+  },
+  {
+    "run_id": 25149273417,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-30T05:35:40Z",
+    "updated_at": "2026-04-30T05:35:58Z",
+    "duration_seconds": 18,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25149273417"
+  },
+  {
+    "run_id": 25092603739,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-29T05:31:56Z",
+    "updated_at": "2026-04-29T05:32:12Z",
+    "duration_seconds": 16,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25092603739"
+  },
+  {
+    "run_id": 25035867429,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-28T05:35:58Z",
+    "updated_at": "2026-04-28T05:36:13Z",
+    "duration_seconds": 15,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/25035867429"
+  },
+  {
+    "run_id": 24978196688,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-27T05:29:55Z",
+    "updated_at": "2026-04-27T05:30:05Z",
+    "duration_seconds": 10,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/24978196688"
+  },
+  {
+    "run_id": 24948998387,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-26T05:17:26Z",
+    "updated_at": "2026-04-26T05:17:40Z",
+    "duration_seconds": 14,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/24948998387"
+  },
+  {
+    "run_id": 24922776362,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-04-25T04:40:33Z",
+    "updated_at": "2026-04-25T04:40:46Z",
+    "duration_seconds": 13,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/24922776362"
+  }
+]
