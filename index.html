@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAZR | Stat Matrix</title>
+    <title>NAZR | Stats Matrix</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="stylesheet" href="index.css">
@@ -17,14 +17,15 @@
     <nav class="top-nav">
         <div class="brand-container">
             <h1 class="brand-logo">NAZR</h1>
-            <div class="dispatch-time">NAZR Engine Last Pulse: <span id="nazrPulseTime">Tracking...</span></div>
+            <div class="dispatch-time">Engine Pulse: <span id="nazrPulseTime">Tracking...</span></div>
         </div>
+        <!-- VEDA Style Hamburger on Right -->
         <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
     </nav>
 
-    <!-- Exactly 10 Menus, Exactly 8 Letters Each -->
+    <!-- Sidebar Slides From Right -->
     <div class="sidebar" id="sidebarMenu">
         <a href="#" class="menu-item active-menu" onclick="switchView('OVERVIEW')">OVERVIEW</a>
         <a href="#" class="menu-item" onclick="switchView('TEMPORAL')">TEMPORAL</a>
@@ -55,38 +56,59 @@
             </div>
         </div>
 
-        <!-- VIEW 2: TEMPORAL (Mini Sparklines per Repo) -->
+        <!-- VIEW 2: TEMPORAL -->
         <div id="TEMPORAL" class="view-section">
-            <h2 class="section-title">Temporal</h2>
-            <div class="section-sub">Last 30 Days Execution Density Per Node</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Temporal</h2>
+                    <div class="section-sub">Last 30 Days Execution Density Per Node</div>
+                </div>
+                <input type="text" id="temporalSearch" class="search-input" placeholder="Search Node..." onkeyup="renderTemporal()">
+            </div>
             <div class="data-grid" id="temporalGrid"></div>
         </div>
 
         <!-- VIEW 3: VITALITY -->
         <div id="VITALITY" class="view-section">
-            <h2 class="section-title">Vitality</h2>
-            <div class="section-sub">Lifetime Success vs Failure Ratios</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Vitality</h2>
+                    <div class="section-sub">Lifetime Success vs Failure Ratios</div>
+                </div>
+            </div>
             <div class="data-grid" id="vitalityGrid"></div>
         </div>
 
-        <!-- VIEW 4: VELOCITY -->
+        <!-- VIEW 4: VELOCITY (Cards) -->
         <div id="VELOCITY" class="view-section">
-            <h2 class="section-title">Velocity</h2>
-            <div class="section-sub">Duration Fluctuation Analysis (Seconds)</div>
-            <div class="chart-box" id="velocityChart"></div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Velocity</h2>
+                    <div class="section-sub">Granular Duration Analytics (Seconds)</div>
+                </div>
+            </div>
+            <div class="data-grid" id="velocityGrid"></div>
         </div>
 
         <!-- VIEW 5: FAILURES -->
         <div id="FAILURES" class="view-section">
-            <h2 class="section-title">Failures</h2>
-            <div class="section-sub">Isolated Workflow Disruptions</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Failures</h2>
+                    <div class="section-sub">Isolated Workflow Disruptions</div>
+                </div>
+            </div>
             <div class="data-grid" id="failuresGrid"></div>
         </div>
 
-        <!-- VIEW 6: TOPOLOGY (Radar) -->
+        <!-- VIEW 6: TOPOLOGY -->
         <div id="TOPOLOGY" class="view-section">
-            <h2 class="section-title">Topology</h2>
-            <div class="section-sub">Global Network Pulse Check</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Topology</h2>
+                    <div class="section-sub">Global Network Pulse Check</div>
+                </div>
+            </div>
             <div class="radar-container">
                 <div class="radar-ring d1"></div><div class="radar-ring d2"></div><div class="radar-ring d3"></div>
                 <div class="sync-box">
@@ -99,24 +121,34 @@
 
         <!-- VIEW 7: TERMINAL -->
         <div id="TERMINAL" class="view-section">
-            <h2 class="section-title">Terminal</h2>
-            <div class="section-sub">Live Telemetry Handshake Logs</div>
-            <div class="chart-box" style="height: 500px; font-family:'Fira Code', monospace; background:rgba(5,7,12,0.95); overflow-y:auto;" id="terminalBox">
-                <!-- Injected via JS -->
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Terminal</h2>
+                    <div class="section-sub">Live Telemetry Handshake Logs</div>
+                </div>
             </div>
+            <div class="chart-box" style="height: 500px; font-family:'Fira Code', monospace; background:rgba(5,7,12,0.95); overflow-y:auto;" id="terminalBox"></div>
         </div>
 
         <!-- VIEW 8: REGISTRY -->
         <div id="REGISTRY" class="view-section">
-            <h2 class="section-title">Registry</h2>
-            <div class="section-sub">Configured Ecosystem Endpoints</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Registry</h2>
+                    <div class="section-sub">Configured Ecosystem Endpoints</div>
+                </div>
+            </div>
             <div class="data-grid" id="registryGrid"></div>
         </div>
 
         <!-- VIEW 9: EXPORTER -->
         <div id="EXPORTER" class="view-section">
-            <h2 class="section-title">Exporter</h2>
-            <div class="section-sub">Compile Flat Telemetry Extract</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Exporter</h2>
+                    <div class="section-sub">Compile Flat Telemetry Extract</div>
+                </div>
+            </div>
             <div class="chart-box" style="text-align: center; padding: 4rem 2rem;">
                 <h3 style="font-size:2rem; margin-top:0;">Download Complete Dataset</h3>
                 <p style="color:var(--text-muted); margin-bottom: 2rem;">Extracts all historical workflow execution logs across every connected node.</p>
@@ -126,15 +158,29 @@
 
         <!-- VIEW 10: SETTINGS -->
         <div id="SETTINGS" class="view-section">
-            <h2 class="section-title">Settings</h2>
-            <div class="section-sub">Matrix Calibration Themes</div>
+            <div class="header-flex">
+                <div>
+                    <h2 class="section-title">Settings</h2>
+                    <div class="section-sub">Matrix Calibration Themes</div>
+                </div>
+            </div>
             <div class="theme-grid" id="themeGrid"></div>
         </div>
 
     </div>
 
     <script>
-        // --- SPA MENU LOGIC (VEDA STYLE) ---
+        // --- STRICT DD-MM-YYYY FORMATTER ---
+        function formatStrictDate(dateString) {
+            const d = new Date(dateString);
+            if (isNaN(d)) return "N/A";
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        // --- SPA MENU LOGIC ---
         function toggleMenu() {
             document.getElementById('sidebarMenu').classList.toggle('active');
             document.getElementById('hamburgerBtn').classList.toggle('active');
@@ -168,10 +214,7 @@
                 btn.classList.remove('active');
                 if(btn.innerText === name.toUpperCase()) btn.classList.add('active');
             });
-            
-            // Re-render ApexCharts for color updates
-            if(chartsInstance['VELOCITY']) renderVelocity();
-            renderTemporal(); // Re-render sparklines
+            renderTemporal(); // Update chart colors instantly
         }
 
         function initThemes() {
@@ -189,23 +232,22 @@
         // --- CORE STATE ---
         let allData = []; 
         let projectsList = [];
-        let chartsInstance = {};
         let temporalCharts = [];
 
         // --- DATE PICKER DYNAMICS ---
         const datePicker = document.getElementById('datePicker');
-        
-        // Strict boundary: 1 Feb 2026 to Today IST
         const istOffset = 5.5 * 60 * 60 * 1000;
         const todayStr = new Date(new Date().getTime() + istOffset).toISOString().split('T')[0];
         
         datePicker.min = "2026-02-01";
         datePicker.max = todayStr;
         datePicker.value = todayStr;
+        datePicker.setAttribute('data-date', formatStrictDate(todayStr));
 
         datePicker.addEventListener('change', (e) => {
             const selectedStr = e.target.value;
-            const titleDate = selectedStr === todayStr ? "Today's Matrix" : `Matrix: ${selectedStr}`;
+            datePicker.setAttribute('data-date', formatStrictDate(selectedStr));
+            const titleDate = selectedStr === todayStr ? "Today's Matrix" : `Matrix: ${formatStrictDate(selectedStr)}`;
             document.getElementById('overviewTitle').innerText = titleDate;
             renderOverview(selectedStr);
         });
@@ -213,7 +255,6 @@
         // --- FETCH NAZR DISPATCH ---
         async function fetchNAZRDispatch() {
             try {
-                // Fetch public workflow runs for the NAZR repo itself
                 const res = await fetch('https://api.github.com/repos/ravikiranoffl/NAZR/actions/runs');
                 const data = await res.json();
                 if(data.workflow_runs && data.workflow_runs.length > 0) {
@@ -222,20 +263,18 @@
                     const diffMs = now - lastRun;
                     const diffHrs = Math.floor(diffMs / 3600000);
                     const diffMins = Math.floor((diffMs % 3600000) / 60000);
-                    
-                    let text = diffHrs > 0 ? `${diffHrs} Hours Ago` : `${diffMins} Minutes Ago`;
-                    document.getElementById('nazrPulseTime').innerText = text;
+                    document.getElementById('nazrPulseTime').innerText = diffHrs > 0 ? `${diffHrs} Hours Ago` : `${diffMins} Minutes Ago`;
                 }
             } catch (e) {
                 document.getElementById('nazrPulseTime').innerText = "ONLINE";
             }
         }
 
-        // --- DATA INGESTION ---
+        // --- DATA INGESTION (WITH PAGES FILTER) ---
         async function loadEcosystem() {
             try {
                 fetchNAZRDispatch();
-                setInterval(fetchNAZRDispatch, 300000); // Check NAZR dispatch every 5 mins
+                setInterval(fetchNAZRDispatch, 300000);
 
                 const regRes = await fetch('registry.json');
                 if (!regRes.ok) throw new Error("Registry missing.");
@@ -248,14 +287,22 @@
                     
                     const promise = fetch(`REPOS/${repoName}/actions.json`)
                         .then(res => res.ok ? res.json() : [])
-                        .then(data => { data.forEach(run => run.project = repoName); allData.push(...data); })
+                        .then(data => {
+                            // IGNORE PAGES BUILD DEPLOYMENT
+                            const filteredData = data.filter(r => {
+                                const isPages = (r.name && r.name.toLowerCase().includes('pages build')) || 
+                                                (r.trigger_event && r.trigger_event.toLowerCase() === 'page_build') ||
+                                                (r.html_url && r.html_url.toLowerCase().includes('pages'));
+                                return !isPages;
+                            });
+                            filteredData.forEach(run => run.project = repoName); 
+                            allData.push(...filteredData); 
+                        })
                         .catch(() => {});
                     fetchPromises.push(promise);
                 });
 
                 await Promise.all(fetchPromises);
-                
-                // Sort descending globally
                 allData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
                 
                 renderOverview(datePicker.value);
@@ -265,78 +312,61 @@
             }
         }
 
-        // --- RENDER: OVERVIEW (Dynamic Date Drill-Down) ---
+        // --- RENDER: OVERVIEW ---
         function renderOverview(targetDate) {
             const grid = document.getElementById('todayGrid');
             grid.innerHTML = '';
 
-            // Filter data for chosen date
             const dateRuns = allData.filter(run => run.updated_at.startsWith(targetDate));
-            
             if(dateRuns.length === 0) {
-                grid.innerHTML = `<div style="color:var(--text-muted); font-size:1.2rem; grid-column:1/-1;">NO TELEMETRY RECORDED FOR ${targetDate}.</div>`;
+                grid.innerHTML = `<div style="color:var(--text-muted); font-size:1.2rem; grid-column:1/-1;">NO TELEMETRY RECORDED FOR ${formatStrictDate(targetDate)}.</div>`;
                 return;
             }
 
-            // Group by project, and sort projects by who ran latest ON THIS DATE
             let projectGroups = [];
             projectsList.forEach(proj => {
                 const projRuns = dateRuns.filter(r => r.project === proj.name);
                 if(projRuns.length > 0) {
                     projRuns.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-                    projectGroups.push({
-                        name: proj.name,
-                        latestTime: new Date(projRuns[0].updated_at).getTime(),
-                        runs: projRuns
-                    });
+                    projectGroups.push({ name: proj.name, latestTime: new Date(projRuns[0].updated_at).getTime(), runs: projRuns });
                 }
             });
-
-            // Auto-sort so latest active repo is always top left
             projectGroups.sort((a, b) => b.latestTime - a.latestTime);
 
             projectGroups.forEach(group => {
                 const latestRun = group.runs[0];
                 const isSuccess = latestRun.conclusion === 'success';
                 const statusColor = isSuccess ? 'var(--stat-good)' : 'var(--stat-dead)';
-                const statusText = isSuccess ? 'STABLE' : 'FAILED';
                 
-                // Construct Log History HTML
                 let logsHtml = '';
                 group.runs.forEach(r => {
                     const tDate = new Date(r.updated_at);
                     const hh = String(tDate.getHours()).padStart(2, '0');
                     const mm = String(tDate.getMinutes()).padStart(2, '0');
                     const ss = String(tDate.getSeconds()).padStart(2, '0');
-                    const statusIcon = r.conclusion === 'success' ? '✓' : '✗';
                     const iconColor = r.conclusion === 'success' ? 'var(--stat-good)' : 'var(--stat-dead)';
-                    
                     logsHtml += `
                         <div class="log-entry">
-                            <span><span class="log-time">[${hh}:${mm}:${ss}]</span> <span style="color:${iconColor}; margin-left:10px;">${statusIcon} ID:${r.run_id}</span></span>
+                            <span><span class="log-time">[${hh}:${mm}:${ss}]</span> <span style="color:${iconColor}; margin-left:10px;">${r.conclusion==='success'?'✓':'✗'} ID:${r.run_id}</span></span>
                             <span class="log-dur">${r.duration_seconds}s</span>
                         </div>
                     `;
                 });
 
                 const card = document.createElement('div');
-                card.className = 'node-card';
+                card.className = 'node-card clickable';
                 card.setAttribute('onclick', "this.classList.toggle('expanded')");
                 card.innerHTML = `
                     <div class="node-header">
                         <div class="node-title">${group.name}</div>
-                        <div class="status-badge" style="color:${statusColor}; border-color:${statusColor}; box-shadow:0 0 10px ${statusColor}50;">
-                            ${statusText}
-                        </div>
+                        <div class="status-badge" style="color:${statusColor}; border-color:${statusColor};">${isSuccess ? 'STABLE' : 'FAILED'}</div>
                     </div>
                     <div class="stat-row"><span class="label">Total Executions:</span> <span class="val">${group.runs.length} Runs</span></div>
                     <div class="stat-row"><span class="label">Latest Pulse (IST):</span> <span class="val">${new Date(latestRun.updated_at).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata', hour12:false})}</span></div>
                     <div class="stat-row"><span class="label">Latest Duration:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
-                    
                     <div style="text-align:center; margin-top:10px; color:var(--accent); font-size:0.8rem; letter-spacing:2px; font-weight:800;">CLICK TO EXPAND LOGS ▾</div>
-                    
                     <div class="run-logs" onclick="event.stopPropagation()">
-                        <div style="color:var(--text-muted); font-size:0.7rem; margin-bottom:10px; letter-spacing:1px;">Execution History (${targetDate})</div>
+                        <div style="color:var(--text-muted); font-size:0.7rem; margin-bottom:10px; letter-spacing:1px;">Execution History (${formatStrictDate(targetDate)})</div>
                         ${logsHtml}
                     </div>
                 `;
@@ -344,25 +374,30 @@
             });
         }
 
-        // --- RENDER: TEMPORAL (Sparklines per Repo) ---
+        // --- RENDER: TEMPORAL (With Search Filter) ---
         function renderTemporal() {
             const grid = document.getElementById('temporalGrid');
+            const query = document.getElementById('temporalSearch').value.toLowerCase();
             
-            // Destroy old charts to prevent memory leaks
             temporalCharts.forEach(c => c.destroy());
             temporalCharts = [];
             grid.innerHTML = '';
 
             const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 
-            projectsList.forEach(proj => {
+            const filteredProjects = projectsList.filter(p => p.name.toLowerCase().includes(query));
+            if(filteredProjects.length === 0) {
+                grid.innerHTML = `<div style="color:var(--text-muted);">NO MATCHING NODES.</div>`;
+                return;
+            }
+
+            filteredProjects.forEach(proj => {
                 const projRuns = allData.filter(r => r.project === proj.name);
                 if(projRuns.length === 0) return;
 
-                // Aggregate by day for the last 30 days
                 const dateMap = {};
                 projRuns.forEach(r => {
-                    const d = r.updated_at.split('T')[0];
+                    const d = formatStrictDate(r.updated_at.split('T')[0]);
                     dateMap[d] = (dateMap[d] || 0) + 1;
                 });
 
@@ -375,47 +410,25 @@
                 card.innerHTML = `
                     <div class="node-header" style="border:none; padding:0; margin-bottom:5px;">
                         <div class="node-title" style="font-size:1.1rem;">${proj.name}</div>
-                        <div style="color:var(--accent); font-weight:800;">${counts.reduce((a,b)=>a+b,0)} Runs (30D)</div>
+                        <div style="color:var(--accent); font-weight:800;">${counts.reduce((a,b)=>a+b,0)} Runs</div>
                     </div>
                     <div id="spark-${proj.name}" style="width:100%; height:80px;"></div>
                 `;
                 grid.appendChild(card);
 
-                const options = {
+                const chart = new ApexCharts(document.querySelector(`#spark-${proj.name}`), {
                     series: [{ name: 'Executions', data: counts }],
                     chart: { type: 'area', height: 80, sparkline: { enabled: true } },
                     stroke: { curve: 'smooth', width: 2, colors: [accent] },
                     fill: { type: 'gradient', gradient: { opacityFrom: 0.5, opacityTo: 0.1, colorStops: [{offset:0, color:accent, opacity:0.4}, {offset:100, color:accent, opacity:0}] } },
                     tooltip: { theme: 'dark', fixed: { enabled: false }, x: { show: false }, marker: { show: false } }
-                };
-
-                const chart = new ApexCharts(document.querySelector(`#spark-${proj.name}`), options);
+                });
                 chart.render();
                 temporalCharts.push(chart);
             });
         }
 
-        // --- VIEW ROUTER ---
-        function switchView(viewId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            
-            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
-            event.currentTarget.classList.add('active-menu');
-
-            if(window.innerWidth <= 900) toggleMenu(); // Auto close sidebar on mobile
-
-            // Render on Demand
-            if(viewId === 'OVERVIEW') renderOverview(datePicker.value);
-            if(viewId === 'TEMPORAL') setTimeout(renderTemporal, 100);
-            if(viewId === 'VITALITY') renderVitality();
-            if(viewId === 'VELOCITY') setTimeout(renderVelocity, 100);
-            if(viewId === 'FAILURES') renderFailures();
-            if(viewId === 'REGISTRY') renderRegistry();
-            if(viewId === 'TERMINAL') startTerminal(); else stopTerminal();
-        }
-
-        // --- SUPPLEMENTARY RENDERS ---
+        // --- RENDER: VITALITY ---
         function renderVitality() {
             const grid = document.getElementById('vitalityGrid'); grid.innerHTML = '';
             projectsList.forEach(proj => {
@@ -437,37 +450,53 @@
             });
         }
 
+        // --- RENDER: VELOCITY (Cards Overhaul) ---
         function renderVelocity() {
-            if(chartsInstance['VELOCITY']) chartsInstance['VELOCITY'].destroy();
-            let series = [];
+            const grid = document.getElementById('velocityGrid'); grid.innerHTML = '';
             projectsList.forEach(proj => {
-                const runs = allData.filter(r => r.project === proj.name).slice(0, 30).reverse();
-                if(runs.length > 0) series.push({ name: proj.name, data: runs.map(r => r.duration_seconds) });
-            });
-            const options = {
-                series: series, chart: { type: 'line', height: 350, background: 'transparent', toolbar:{show:false} },
-                stroke: { curve: 'smooth', width: 2 }, theme: { mode: 'dark' },
-                xaxis: { labels: { show: false } }, yaxis: { title: { text: 'Duration (s)' } }
-            };
-            chartsInstance['VELOCITY'] = new ApexCharts(document.querySelector("#velocityChart"), options);
-            chartsInstance['VELOCITY'].render();
-        }
+                const projRuns = allData.filter(r => r.project === proj.name);
+                if(projRuns.length === 0) return;
+                
+                let min = Infinity, max = 0, sum = 0;
+                projRuns.forEach(r => {
+                    const sec = r.duration_seconds;
+                    if(sec < min) min = sec;
+                    if(sec > max) max = sec;
+                    sum += sec;
+                });
+                const avg = (sum / projRuns.length).toFixed(1);
+                const latest = projRuns[0].duration_seconds;
 
-        function renderFailures() {
-            const grid = document.getElementById('failuresGrid'); grid.innerHTML = '';
-            const fails = allData.filter(r => r.conclusion !== 'success').slice(0, 30);
-            if(fails.length === 0) { grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; grid-column:1/-1;">NO CRITICAL FAILURES IN DATABASE.</div>`; return; }
-            fails.forEach(f => {
                 grid.innerHTML += `
-                    <div class="node-card" style="border-color:var(--stat-dead);">
-                        <div class="node-header"><div class="node-title">${f.project}</div><div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">CRASH</div></div>
-                        <div class="stat-row"><span class="label">Timestamp:</span><span class="val">${new Date(f.updated_at).toLocaleString()}</span></div>
-                        <a href="${f.html_url}" target="_blank" class="theme-btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:15px; padding:10px;">Debug Link &rarr;</a>
+                    <div class="node-card">
+                        <div class="node-header"><div class="node-title">${proj.name}</div><div class="status-badge" style="color:var(--accent); border-color:var(--accent);">SPEED</div></div>
+                        <div class="stat-row"><span class="label">Minimum Duration:</span><span class="val">${min}s</span></div>
+                        <div class="stat-row"><span class="label">Maximum Duration:</span><span class="val">${max}s</span></div>
+                        <div class="stat-row"><span class="label">Average Speed:</span><span class="val">${avg}s</span></div>
+                        <hr style="border-color:var(--border); margin:10px 0;">
+                        <div class="stat-row"><span class="label">Latest Pulse:</span><span class="val" style="color:var(--accent); text-shadow:0 0 10px var(--accent-glow);">${latest}s</span></div>
                     </div>
                 `;
             });
         }
 
+        // --- RENDER: FAILURES ---
+        function renderFailures() {
+            const grid = document.getElementById('failuresGrid'); grid.innerHTML = '';
+            const fails = allData.filter(r => r.conclusion !== 'success').slice(0, 30);
+            if(fails.length === 0) { grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; grid-column:1/-1;">NO CRITICAL FAILURES DETECTED.</div>`; return; }
+            fails.forEach(f => {
+                grid.innerHTML += `
+                    <div class="node-card" style="border-color:var(--stat-dead);">
+                        <div class="node-header"><div class="node-title">${f.project}</div><div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">CRASH</div></div>
+                        <div class="stat-row"><span class="label">Date:</span><span class="val">${formatStrictDate(f.updated_at.split('T')[0])}</span></div>
+                        <a href="${f.html_url}" target="_blank" class="btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:15px; width:100%;">Inspect Log</a>
+                    </div>
+                `;
+            });
+        }
+
+        // --- RENDER: REGISTRY ---
         function renderRegistry() {
             const grid = document.getElementById('registryGrid'); grid.innerHTML = '';
             projectsList.forEach(proj => {
@@ -475,7 +504,8 @@
                     <div class="node-card">
                         <div class="node-header"><div class="node-title">${proj.name}</div></div>
                         <div class="stat-row"><span class="label">Target Git:</span><span class="val" style="font-size:0.8rem;">${proj.url}</span></div>
-                        <div class="stat-row"><span class="label">Storage Location:</span><span class="val">REPOS/${proj.name}/actions.json</span></div>
+                        <div class="stat-row"><span class="label">Storage Path:</span><span class="val">REPOS/${proj.name}/actions.json</span></div>
+                        <a href="${proj.url}" target="_blank" class="btn" style="margin-top:15px; width:100%;">View Source</a>
                     </div>
                 `;
             });
@@ -510,10 +540,30 @@
         function stopTerminal() { clearInterval(termInt); }
 
         function downloadCSV() {
-            let csv = "Project,Run ID,Conclusion,Updated At,Duration(s),Log URL\n";
-            allData.forEach(r => csv += `${r.project},${r.run_id},${r.conclusion},${r.updated_at},${r.duration_seconds},${r.html_url}\n`);
+            let csv = "Project,Run ID,Conclusion,Date,Duration(s),Log URL\n";
+            allData.forEach(r => csv += `${r.project},${r.run_id},${r.conclusion},${formatStrictDate(r.updated_at.split('T')[0])},${r.duration_seconds},${r.html_url}\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'NAZR_EXPORT.csv'; a.click();
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `NAZR_EXPORT_${formatStrictDate(todayStr)}.csv`; a.click();
+        }
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
+            event.currentTarget.classList.add('active-menu');
+
+            if(document.getElementById('sidebarMenu').classList.contains('active')) toggleMenu();
+
+            if(viewId === 'OVERVIEW') renderOverview(datePicker.value);
+            if(viewId === 'TEMPORAL') setTimeout(renderTemporal, 100);
+            if(viewId === 'VITALITY') renderVitality();
+            if(viewId === 'VELOCITY') renderVelocity();
+            if(viewId === 'FAILURES') renderFailures();
+            if(viewId === 'REGISTRY') renderRegistry();
+            if(viewId === 'TERMINAL') startTerminal(); else stopTerminal();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         initThemes();
