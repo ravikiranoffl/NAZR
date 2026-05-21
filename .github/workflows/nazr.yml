@@ -5,6 +5,10 @@ on:
     - cron: '0 */6 * * *' # Runs every 6 hours
   workflow_dispatch: # Allows manual trigger testing
 
+# FIX 1: Grant explicit write permissions to the repository's GITHUB_TOKEN
+permissions:
+  contents: write
+
 jobs:
   reconnaissance:
     runs-on: ubuntu-latest
@@ -29,8 +33,9 @@ jobs:
 
       - name: Process Atomic Commits per Repository
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # FIX 2: Swap out the bot profile for your authenticated GitHub identity for contributions
+          git config --global user.name "ravikiranoffl"
+          git config --global user.email "171322216+ravikiranoffl@users.noreply.github.com"
           
           # Read comma-separated updated folders from tracking txt
           if [ -f updates.txt ]; then
@@ -47,6 +52,6 @@ jobs:
               fi
             done
             
-            # Push changes upstream safely
+            # Push changes upstream safely using the verified write permissions
             git push origin main
           fi
