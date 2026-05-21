@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAZR | System Telemetry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <h1 class="brand-logo">NAZR</h1>
+        <!-- Hamburger for Mobile -->
+        <div id="mobileToggle" style="cursor:pointer; display:none; color:var(--accent); font-weight:800;">MENU</div>
+    </nav>
+
+    <div class="sidebar" id="sidebar">
+        <!-- Exactly 8 Letters -->
+        <a href="#" class="menu-item active-menu" onclick="switchView('OVERVIEW')">OVERVIEW</a>
+        <a href="#" class="menu-item" onclick="switchView('TEMPORAL')">TEMPORAL</a>
+        <a href="#" class="menu-item" onclick="switchView('VITALITY')">VITALITY</a>
+        <a href="#" class="menu-item" onclick="switchView('VELOCITY')">VELOCITY</a>
+        <a href="#" class="menu-item" onclick="switchView('FAILURES')">FAILURES</a>
+        <a href="#" class="menu-item" onclick="switchView('REGISTRY')">REGISTRY</a>
+        <a href="#" class="menu-item" onclick="switchView('EXPORTER')">EXPORTER</a>
+        <a href="#" class="menu-item" onclick="switchView('SETTINGS')">SETTINGS</a>
+    </div>
+
+    <div class="container">
+        <!-- VIEW: OVERVIEW -->
+        <div id="OVERVIEW" class="view-section active">
+            <h2 class="section-title">Today's Matrix</h2>
+            <div class="section-sub">Real-Time Execution Telemetry</div>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card"><div class="kpi-label">Workflows Fired Today</div><div class="kpi-val" id="kpiTotalRuns">0</div></div>
+                <div class="kpi-card"><div class="kpi-label">Successful Executions</div><div class="kpi-val" id="kpiSuccess" style="color:var(--stat-good);">0</div></div>
+                <div class="kpi-card"><div class="kpi-label">Active Monitored Nodes</div><div class="kpi-val" id="kpiNodes">0</div></div>
+            </div>
+
+            <div class="data-grid" id="todayGrid">
+                <!-- Populated by JS -->
+                <div style="color:var(--text-muted);">Fetching live telemetry...</div>
+            </div>
+        </div>
+
+        <!-- VIEW: TEMPORAL -->
+        <div id="TEMPORAL" class="view-section">
+            <h2 class="section-title">Temporal Flow</h2>
+            <div class="section-sub">Workflow Execution Density (30 Days)</div>
+            <div class="chart-box" id="temporalChart"></div>
+        </div>
+
+        <!-- VIEW: VITALITY -->
+        <div id="VITALITY" class="view-section">
+            <h2 class="section-title">Node Vitality</h2>
+            <div class="section-sub">Lifetime Success vs Failure Ratios</div>
+            <div class="data-grid" id="vitalityGrid"></div>
+        </div>
+
+        <!-- VIEW: VELOCITY -->
+        <div id="VELOCITY" class="view-section">
+            <h2 class="section-title">Execution Velocity</h2>
+            <div class="section-sub">Duration Fluctuation Analysis (Seconds)</div>
+            <div class="chart-box" id="velocityChart"></div>
+        </div>
+
+        <!-- VIEW: FAILURES -->
+        <div id="FAILURES" class="view-section">
+            <h2 class="section-title">System Watchdog</h2>
+            <div class="section-sub">Isolated Workflow Failures</div>
+            <div class="data-grid" id="failuresGrid"></div>
+        </div>
+
+        <!-- VIEW: REGISTRY -->
+        <div id="REGISTRY" class="view-section">
+            <h2 class="section-title">Node Registry</h2>
+            <div class="section-sub">Configured Ecosystem Endpoints</div>
+            <div class="data-grid" id="registryGrid"></div>
+        </div>
+
+        <!-- VIEW: EXPORTER -->
+        <div id="EXPORTER" class="view-section">
+            <h2 class="section-title">Data Exporter</h2>
+            <div class="section-sub">Compile Flat Telemetry Extract</div>
+            <div class="kpi-card" style="align-items: center; text-align: center; max-width: 600px; margin: 0 auto;">
+                <h3 style="margin-top:0;">Download Complete Dataset</h3>
+                <p style="color:var(--text-muted); margin-bottom: 2rem;">Extracts all historical workflow execution logs across every connected node into a standard CSV payload for external analysis.</p>
+                <button class="btn" onclick="downloadCSV()">Generate CSV Dump</button>
+            </div>
+        </div>
+
+        <!-- VIEW: SETTINGS -->
+        <div id="SETTINGS" class="view-section">
+            <h2 class="section-title">Calibration</h2>
+            <div class="section-sub">Neural Matrix Interface Themes</div>
+            <div class="theme-grid" id="themeGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. CORE VARIABLES & STATE ---
+        let allData = []; 
+        let projectsList = [];
+        let chartsInstance = {};
+
+        // --- 2. THEME ENGINE (10 Premium Themes) ---
+        const themes = {
+            "Neon Matrix": { base: "#05070a", grad1: "#0a1018", accent: "#00ffcc", glow: "rgba(0,255,204,0.3)" },
+            "Crimson Forge": { base: "#0a0202", grad1: "#1a0505", accent: "#ff3333", glow: "rgba(255,51,51,0.3)" },
+            "Cyber Violet": { base: "#06020a", grad1: "#12051f", accent: "#b366ff", glow: "rgba(179,102,255,0.3)" },
+            "Solar Flare": { base: "#0a0601", grad1: "#1a1002", accent: "#ffaa00", glow: "rgba(255,170,0,0.3)" },
+            "Ocean Trench": { base: "#01050a", grad1: "#020f1f", accent: "#0099ff", glow: "rgba(0,153,255,0.3)" },
+            "Toxic Sludge": { base: "#040a02", grad1: "#0a1a05", accent: "#77ff00", glow: "rgba(119,255,0,0.3)" },
+            "Monolith": { base: "#080808", grad1: "#141414", accent: "#ffffff", glow: "rgba(255,255,255,0.2)" },
+            "Golden Ratio": { base: "#0a0802", grad1: "#1c1605", accent: "#ffd700", glow: "rgba(255,215,0,0.3)" },
+            "Cobalt Edge": { base: "#02040d", grad1: "#060b24", accent: "#4d79ff", glow: "rgba(77,121,255,0.3)" },
+            "Plasma Pink": { base: "#0a0106", grad1: "#1f0312", accent: "#ff3399", glow: "rgba(255,51,153,0.3)" }
+        };
+
+        function applyTheme(name) {
+            const t = themes[name];
+            document.documentElement.style.setProperty('--bg-base', t.base);
+            document.documentElement.style.setProperty('--bg-grad1', t.grad1);
+            document.documentElement.style.setProperty('--accent', t.accent);
+            document.documentElement.style.setProperty('--accent-glow', t.glow);
+            document.documentElement.style.setProperty('--border-highlight', t.glow);
+            
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === name.toUpperCase()) btn.classList.add('active');
+            });
+            // Re-render charts to update colors
+            if(chartsInstance['TEMPORAL']) renderTemporal();
+            if(chartsInstance['VELOCITY']) renderVelocity();
+        }
+
+        function initThemes() {
+            const grid = document.getElementById('themeGrid');
+            Object.keys(themes).forEach(name => {
+                const btn = document.createElement('div');
+                btn.className = 'theme-btn';
+                btn.innerText = name.toUpperCase();
+                btn.style.background = `linear-gradient(135deg, ${themes[name].grad1}, ${themes[name].base})`;
+                btn.onclick = () => applyTheme(name);
+                grid.appendChild(btn);
+            });
+            applyTheme("Neon Matrix");
+        }
+
+        // --- 3. DATA INGESTION ENGINE ---
+        async function loadEcosystem() {
+            try {
+                // Fetch the master registry list
+                const regRes = await fetch('registry.json');
+                if (!regRes.ok) throw new Error("Registry missing. Run NAZR_engine.py first.");
+                const registryData = await regRes.json();
+                
+                let fetchPromises = [];
+                
+                registryData.repositories.forEach(url => {
+                    const repoName = url.split('/').pop();
+                    projectsList.push({ name: repoName, url: url });
+                    
+                    // Fetch the dynamically generated actions.json for each repo
+                    const promise = fetch(`REPOS/${repoName}/actions.json`)
+                        .then(res => res.ok ? res.json() : [])
+                        .then(data => {
+                            // Inject project name into each run object for identification
+                            data.forEach(run => run.project = repoName);
+                            allData.push(...data);
+                        })
+                        .catch(() => console.log(`No data for ${repoName} yet.`));
+                    fetchPromises.push(promise);
+                });
+
+                await Promise.all(fetchPromises);
+                
+                // Sort master array by update time descending
+                allData.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+                
+                // Render Default View
+                document.getElementById('kpiNodes').innerText = projectsList.length;
+                renderOverview();
+
+            } catch (err) {
+                document.getElementById('todayGrid').innerHTML = `<div style="color:var(--stat-dead)">System Error: ${err.message}</div>`;
+            }
+        }
+
+        // --- 4. RENDER: OVERVIEW (Today's Metrics) ---
+        function renderOverview() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const runsToday = allData.filter(run => run.updated_at.startsWith(todayStr));
+            
+            document.getElementById('kpiTotalRuns').innerText = runsToday.length;
+            document.getElementById('kpiSuccess').innerText = runsToday.filter(r => r.conclusion === 'success').length;
+
+            const grid = document.getElementById('todayGrid');
+            grid.innerHTML = '';
+
+            projectsList.forEach(proj => {
+                const projectRuns = runsToday.filter(r => r.project === proj.name);
+                const latestRun = allData.find(r => r.project === proj.name); // Latest ever, just in case 0 today
+
+                if(!latestRun) return; // Skip if totally empty
+
+                const isSuccess = latestRun.conclusion === 'success';
+                const statusColor = isSuccess ? 'var(--stat-good)' : 'var(--stat-dead)';
+                const statusText = isSuccess ? 'STABLE' : 'FAILED';
+                
+                const card = document.createElement('div');
+                card.className = 'node-card';
+                card.innerHTML = `
+                    <div class="node-header">
+                        <div class="node-title">${proj.name}</div>
+                        <div class="status-badge" style="color:${statusColor}; border-color:${statusColor}; box-shadow:0 0 10px ${statusColor}50;">
+                            ${statusText}
+                        </div>
+                    </div>
+                    <div class="stat-row"><span class="label">Executions Today:</span> <span class="val">${projectRuns.length}</span></div>
+                    <div class="stat-row"><span class="label">Last Run (IST):</span> <span class="val">${new Date(latestRun.updated_at).toLocaleTimeString('en-IN', {timeZone: 'Asia/Kolkata'})}</span></div>
+                    <div class="stat-row"><span class="label">Compute Time:</span> <span class="val">${latestRun.duration_seconds}s</span></div>
+                    <a href="${latestRun.html_url}" target="_blank" class="btn" style="margin-top:10px;">Inspect Log</a>
+                `;
+                grid.appendChild(card);
+            });
+            
+            if(grid.innerHTML === '') grid.innerHTML = `<div style="color:var(--text-muted)">No executions logged yet.</div>`;
+        }
+
+        // --- 5. RENDER: TEMPORAL (Timeline Chart) ---
+        function renderTemporal() {
+            if(chartsInstance['TEMPORAL']) chartsInstance['TEMPORAL'].destroy();
+            
+            // Group runs by date across all projects
+            const dateCounts = {};
+            allData.forEach(run => {
+                const d = run.updated_at.split('T')[0];
+                dateCounts[d] = (dateCounts[d] || 0) + 1;
+            });
+            
+            const sortedDates = Object.keys(dateCounts).sort();
+            const counts = sortedDates.map(d => dateCounts[d]);
+            
+            const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+
+            const options = {
+                series: [{ name: 'Total Executions', data: counts }],
+                chart: { type: 'area', height: 350, toolbar: { show: false }, background: 'transparent' },
+                colors: [accent],
+                fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0.1 } },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth', width: 3 },
+                xaxis: { categories: sortedDates, labels: { style: { colors: '#8b9bb4' } } },
+                yaxis: { labels: { style: { colors: '#8b9bb4' } } },
+                theme: { mode: 'dark' }
+            };
+
+            chartsInstance['TEMPORAL'] = new ApexCharts(document.querySelector("#temporalChart"), options);
+            chartsInstance['TEMPORAL'].render();
+        }
+
+        // --- 6. RENDER: VITALITY (Success/Fail ratios) ---
+        function renderVitality() {
+            const grid = document.getElementById('vitalityGrid');
+            grid.innerHTML = '';
+
+            projectsList.forEach(proj => {
+                const projRuns = allData.filter(r => r.project === proj.name);
+                if(projRuns.length === 0) return;
+
+                const successCount = projRuns.filter(r => r.conclusion === 'success').length;
+                const rate = ((successCount / projRuns.length) * 100).toFixed(1);
+                
+                let color = 'var(--stat-good)';
+                if(rate < 100) color = 'var(--stat-warn)';
+                if(rate < 80) color = 'var(--stat-dead)';
+
+                const card = document.createElement('div');
+                card.className = 'node-card';
+                card.innerHTML = `
+                    <div class="node-header">
+                        <div class="node-title">${proj.name}</div>
+                        <div style="font-size:1.5rem; font-weight:800; color:${color}; text-shadow:0 0 15px ${color}50;">${rate}%</div>
+                    </div>
+                    <div style="width:100%; height:8px; background:rgba(0,0,0,0.5); border-radius:4px; overflow:hidden; margin: 15px 0;">
+                        <div style="width:${rate}%; height:100%; background:${color}; box-shadow:0 0 10px ${color};"></div>
+                    </div>
+                    <div class="stat-row"><span class="label">Lifetime Runs:</span> <span class="val">${projRuns.length}</span></div>
+                    <div class="stat-row"><span class="label">Failed Runs:</span> <span class="val" style="color:var(--stat-dead)">${projRuns.length - successCount}</span></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 7. RENDER: VELOCITY (Duration Trends) ---
+        function renderVelocity() {
+            if(chartsInstance['VELOCITY']) chartsInstance['VELOCITY'].destroy();
+            
+            // Get last 20 runs for each project to show speed trends
+            let series = [];
+            projectsList.forEach(proj => {
+                const runs = allData.filter(r => r.project === proj.name).slice(0, 20).reverse();
+                if(runs.length > 0) {
+                    series.push({
+                        name: proj.name,
+                        data: runs.map(r => r.duration_seconds)
+                    });
+                }
+            });
+
+            const options = {
+                series: series,
+                chart: { type: 'line', height: 350, toolbar: { show: false }, background: 'transparent' },
+                stroke: { curve: 'smooth', width: 2 },
+                dataLabels: { enabled: false },
+                xaxis: { labels: { show: false }, tooltip: { enabled: false } },
+                yaxis: { title: { text: 'Duration (Seconds)', style: { color: '#8b9bb4' } }, labels: { style: { colors: '#8b9bb4' } } },
+                legend: { labels: { colors: '#fff' } },
+                theme: { mode: 'dark' }
+            };
+
+            chartsInstance['VELOCITY'] = new ApexCharts(document.querySelector("#velocityChart"), options);
+            chartsInstance['VELOCITY'].render();
+        }
+
+        // --- 8. RENDER: FAILURES (Watchdog) ---
+        function renderFailures() {
+            const grid = document.getElementById('failuresGrid');
+            grid.innerHTML = '';
+            
+            const failures = allData.filter(r => r.conclusion !== 'success').slice(0, 50); // Last 50 fails
+            
+            if(failures.length === 0) {
+                grid.innerHTML = `<div style="color:var(--stat-good); font-weight:800; letter-spacing:2px;">ALL SYSTEMS STABLE. NO FAILURES DETECTED.</div>`;
+                return;
+            }
+
+            failures.forEach(fail => {
+                const card = document.createElement('div');
+                card.className = 'node-card';
+                card.style.borderColor = 'var(--stat-dead)';
+                card.innerHTML = `
+                    <div class="node-header">
+                        <div class="node-title">${fail.project}</div>
+                        <div class="status-badge" style="color:var(--stat-dead); border-color:var(--stat-dead);">ERR CODE 1</div>
+                    </div>
+                    <div class="stat-row"><span class="label">Date:</span> <span class="val">${new Date(fail.updated_at).toLocaleDateString()}</span></div>
+                    <div class="stat-row"><span class="label">Event Trigger:</span> <span class="val">${fail.trigger_event}</span></div>
+                    <a href="${fail.html_url}" target="_blank" class="btn" style="border-color:var(--stat-dead); color:var(--stat-dead); margin-top:10px;">Debug Issue &rarr;</a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 9. RENDER: REGISTRY ---
+        function renderRegistry() {
+            const grid = document.getElementById('registryGrid');
+            grid.innerHTML = '';
+            
+            projectsList.forEach(proj => {
+                const runCount = allData.filter(r => r.project === proj.name).length;
+                const card = document.createElement('div');
+                card.className = 'node-card';
+                card.innerHTML = `
+                    <div class="node-header"><div class="node-title">${proj.name}</div></div>
+                    <div class="stat-row"><span class="label">Target Endpoint:</span> <span class="val" style="word-break:break-all; font-size:0.8rem; margin-left:10px;">${proj.url}</span></div>
+                    <div class="stat-row"><span class="label">Storage Location:</span> <span class="val">REPOS/${proj.name}/actions.json</span></div>
+                    <div class="stat-row"><span class="label">Indexed Logs:</span> <span class="val">${runCount}</span></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 10. EXPORTER SCRIPT ---
+        function downloadCSV() {
+            if(allData.length === 0) return alert("No telemetry data available.");
+            
+            let csv = "Project,Run ID,Status,Conclusion,Started At,Updated At,Duration(s),Trigger,Log URL\n";
+            allData.forEach(row => {
+                csv += `${row.project},${row.run_id},${row.status},${row.conclusion},${row.started_at},${row.updated_at},${row.duration_seconds},${row.trigger_event},${row.html_url}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'NAZR_TELEMETRY_DUMP.csv');
+            a.click();
+        }
+
+        // --- VIEW CONTROLLER ---
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active-menu'));
+            event.currentTarget.classList.add('active-menu');
+
+            // Trigger conditional rendering based on tab
+            if(viewId === 'TEMPORAL') setTimeout(renderTemporal, 100);
+            if(viewId === 'VITALITY') renderVitality();
+            if(viewId === 'VELOCITY') setTimeout(renderVelocity, 100);
+            if(viewId === 'FAILURES') renderFailures();
+            if(viewId === 'REGISTRY') renderRegistry();
+            if(viewId === 'OVERVIEW') renderOverview();
+        }
+
+        // Init Sequence
+        initThemes();
+        loadEcosystem();
+
+    </script>
+</body>
+</html>
