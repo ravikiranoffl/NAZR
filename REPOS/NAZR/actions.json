@@ -1,0 +1,82 @@
+[
+  {
+    "run_id": 26250236724,
+    "status": "in_progress",
+    "conclusion": null,
+    "started_at": "2026-05-21T20:07:32Z",
+    "updated_at": "2026-05-21T20:07:37Z",
+    "duration_seconds": 5,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26250236724"
+  },
+  {
+    "run_id": 26249922640,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T20:01:05Z",
+    "updated_at": "2026-05-21T20:01:54Z",
+    "duration_seconds": 49,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26249922640"
+  },
+  {
+    "run_id": 26249885674,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-21T20:00:23Z",
+    "updated_at": "2026-05-21T20:01:10Z",
+    "duration_seconds": 47,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26249885674"
+  },
+  {
+    "run_id": 26249035300,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T19:43:25Z",
+    "updated_at": "2026-05-21T19:44:04Z",
+    "duration_seconds": 39,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26249035300"
+  },
+  {
+    "run_id": 26248991643,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T19:42:32Z",
+    "updated_at": "2026-05-21T19:43:10Z",
+    "duration_seconds": 38,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26248991643"
+  },
+  {
+    "run_id": 26248946237,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T19:41:37Z",
+    "updated_at": "2026-05-21T19:42:14Z",
+    "duration_seconds": 37,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26248946237"
+  },
+  {
+    "run_id": 26248272783,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T19:28:06Z",
+    "updated_at": "2026-05-21T19:28:54Z",
+    "duration_seconds": 48,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26248272783"
+  },
+  {
+    "run_id": 26247274383,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T19:07:34Z",
+    "updated_at": "2026-05-21T19:07:54Z",
+    "duration_seconds": 20,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26247274383"
+  }
+]
