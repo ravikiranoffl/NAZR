@@ -1,0 +1,112 @@
+[
+  {
+    "run_id": 26242967895,
+    "status": "completed",
+    "conclusion": "failure",
+    "started_at": "2026-05-21T17:43:12Z",
+    "updated_at": "2026-05-21T17:43:12Z",
+    "duration_seconds": 0,
+    "trigger_event": "push",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26242967895"
+  },
+  {
+    "run_id": 26215630692,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-21T08:47:49Z",
+    "updated_at": "2026-05-21T08:51:03Z",
+    "duration_seconds": 194,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26215630692"
+  },
+  {
+    "run_id": 26194729566,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T22:55:46Z",
+    "updated_at": "2026-05-20T22:56:08Z",
+    "duration_seconds": 22,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26194729566"
+  },
+  {
+    "run_id": 26183796192,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T19:03:43Z",
+    "updated_at": "2026-05-20T19:04:21Z",
+    "duration_seconds": 38,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26183796192"
+  },
+  {
+    "run_id": 26151501636,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-20T08:41:56Z",
+    "updated_at": "2026-05-20T08:42:37Z",
+    "duration_seconds": 41,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26151501636"
+  },
+  {
+    "run_id": 26129963534,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T22:47:36Z",
+    "updated_at": "2026-05-19T22:48:08Z",
+    "duration_seconds": 32,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26129963534"
+  },
+  {
+    "run_id": 26119324041,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T19:11:07Z",
+    "updated_at": "2026-05-19T19:11:37Z",
+    "duration_seconds": 30,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26119324041"
+  },
+  {
+    "run_id": 26116252560,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T18:13:01Z",
+    "updated_at": "2026-05-19T18:13:37Z",
+    "duration_seconds": 36,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26116252560"
+  },
+  {
+    "run_id": 26078910512,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-19T05:49:23Z",
+    "updated_at": "2026-05-19T05:49:49Z",
+    "duration_seconds": 26,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26078910512"
+  },
+  {
+    "run_id": 26064351750,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T22:33:33Z",
+    "updated_at": "2026-05-18T22:34:15Z",
+    "duration_seconds": 42,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26064351750"
+  },
+  {
+    "run_id": 26058640639,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-18T20:29:50Z",
+    "updated_at": "2026-05-18T20:30:56Z",
+    "duration_seconds": 66,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/KOSA/actions/runs/26058640639"
+  }
+]
