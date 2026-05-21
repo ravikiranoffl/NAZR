@@ -1,0 +1,52 @@
+name: NAZR Auto Pulse
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Runs every 6 hours
+  workflow_dispatch: # Allows manual trigger testing
+
+jobs:
+  reconnaissance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Base
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Initialize Environment Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Runtime Dependencies
+        run: pip install requests
+
+      - name: Execute Reconnaissance Engine
+        env:
+          NAZR_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python main.py
+
+      - name: Process Atomic Commits per Repository
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Read comma-separated updated folders from tracking txt
+          if [ -f updates.txt ]; then
+            UPDATED=$(cat updates.txt)
+            IFS=',' read -r -a array <<< "$UPDATED"
+            
+            TIMESTAMP=$(date -u +"%Y%m%d%H%M%S")
+            
+            for project in "${array[@]}"; do
+              if [ -n "$project" ]; then
+                echo "Pushing telemetry tracking for project: $project"
+                git add REPOS/$project/actions.json
+                git commit -m "${project}-${TIMESTAMP}"
+              fi
+            done
+            
+            # Push changes upstream safely
+            git push origin main
+          fi
