@@ -2,7 +2,7 @@ name: NAZR Auto Pulse
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Runs every 6 hours
+    - cron: '0 */3 * * *' # Runs every 6 hours
   workflow_dispatch: # Allows manual trigger testing
 
 # FIX 1: Grant explicit write permissions to the repository's GITHUB_TOKEN
