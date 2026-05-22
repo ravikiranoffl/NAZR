@@ -1,8 +1,8 @@
 [
   {
     "run_id": 26293889328,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-22T14:32:55Z",
     "updated_at": "2026-05-22T14:33:00Z",
     "duration_seconds": 5,
@@ -21,8 +21,8 @@
   },
   {
     "run_id": 26285802307,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-22T11:43:46Z",
     "updated_at": "2026-05-22T11:43:49Z",
     "duration_seconds": 3,
@@ -41,8 +41,8 @@
   },
   {
     "run_id": 26272909259,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-22T06:47:35Z",
     "updated_at": "2026-05-22T06:47:39Z",
     "duration_seconds": 4,
@@ -61,8 +61,8 @@
   },
   {
     "run_id": 26271430499,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-22T06:05:49Z",
     "updated_at": "2026-05-22T06:05:55Z",
     "duration_seconds": 6,
@@ -111,8 +111,8 @@
   },
   {
     "run_id": 26262502510,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-22T01:10:20Z",
     "updated_at": "2026-05-22T01:10:24Z",
     "duration_seconds": 4,
@@ -171,8 +171,8 @@
   },
   {
     "run_id": 26250236724,
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "success",
     "started_at": "2026-05-21T20:07:32Z",
     "updated_at": "2026-05-21T20:07:37Z",
     "duration_seconds": 5,
