@@ -1,5 +1,25 @@
 [
   {
+    "run_id": 26285802307,
+    "status": "in_progress",
+    "conclusion": null,
+    "started_at": "2026-05-22T11:43:46Z",
+    "updated_at": "2026-05-22T11:43:49Z",
+    "duration_seconds": 3,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26285802307"
+  },
+  {
+    "run_id": 26272921106,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-22T06:47:54Z",
+    "updated_at": "2026-05-22T06:48:27Z",
+    "duration_seconds": 33,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/NAZR/actions/runs/26272921106"
+  },
+  {
     "run_id": 26272909259,
     "status": "in_progress",
     "conclusion": null,
