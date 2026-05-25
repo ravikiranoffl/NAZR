@@ -1,0 +1,202 @@
+[
+  {
+    "run_id": 26406263371,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:46:18Z",
+    "updated_at": "2026-05-25T14:46:59Z",
+    "duration_seconds": 41,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26406263371"
+  },
+  {
+    "run_id": 26406253553,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:46:03Z",
+    "updated_at": "2026-05-25T14:46:21Z",
+    "duration_seconds": 18,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26406253553"
+  },
+  {
+    "run_id": 26406237559,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:45:39Z",
+    "updated_at": "2026-05-25T14:46:16Z",
+    "duration_seconds": 37,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26406237559"
+  },
+  {
+    "run_id": 26406191891,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:44:35Z",
+    "updated_at": "2026-05-25T14:45:15Z",
+    "duration_seconds": 40,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26406191891"
+  },
+  {
+    "run_id": 26405670298,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:31:55Z",
+    "updated_at": "2026-05-25T14:32:28Z",
+    "duration_seconds": 33,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405670298"
+  },
+  {
+    "run_id": 26405661498,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:31:42Z",
+    "updated_at": "2026-05-25T14:31:58Z",
+    "duration_seconds": 16,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405661498"
+  },
+  {
+    "run_id": 26405258523,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:22:24Z",
+    "updated_at": "2026-05-25T14:22:59Z",
+    "duration_seconds": 35,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405258523"
+  },
+  {
+    "run_id": 26405130301,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:19:25Z",
+    "updated_at": "2026-05-25T14:19:59Z",
+    "duration_seconds": 34,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405130301"
+  },
+  {
+    "run_id": 26405122060,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:19:13Z",
+    "updated_at": "2026-05-25T14:19:27Z",
+    "duration_seconds": 14,
+    "trigger_event": "workflow_dispatch",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405122060"
+  },
+  {
+    "run_id": 26405016547,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:16:42Z",
+    "updated_at": "2026-05-25T14:17:24Z",
+    "duration_seconds": 42,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405016547"
+  },
+  {
+    "run_id": 26405006149,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-25T14:16:27Z",
+    "updated_at": "2026-05-25T14:16:49Z",
+    "duration_seconds": 22,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26405006149"
+  },
+  {
+    "run_id": 26404818270,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:12:02Z",
+    "updated_at": "2026-05-25T14:12:42Z",
+    "duration_seconds": 40,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404818270"
+  },
+  {
+    "run_id": 26404776055,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:11:02Z",
+    "updated_at": "2026-05-25T14:11:57Z",
+    "duration_seconds": 55,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404776055"
+  },
+  {
+    "run_id": 26404745066,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:10:18Z",
+    "updated_at": "2026-05-25T14:10:55Z",
+    "duration_seconds": 37,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404745066"
+  },
+  {
+    "run_id": 26404541963,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:05:23Z",
+    "updated_at": "2026-05-25T14:06:02Z",
+    "duration_seconds": 39,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404541963"
+  },
+  {
+    "run_id": 26404463692,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T14:03:37Z",
+    "updated_at": "2026-05-25T14:04:18Z",
+    "duration_seconds": 41,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404463692"
+  },
+  {
+    "run_id": 26404099922,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T13:55:18Z",
+    "updated_at": "2026-05-25T13:55:58Z",
+    "duration_seconds": 40,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404099922"
+  },
+  {
+    "run_id": 26404083829,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-25T13:54:55Z",
+    "updated_at": "2026-05-25T13:55:23Z",
+    "duration_seconds": 28,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404083829"
+  },
+  {
+    "run_id": 26404070005,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "started_at": "2026-05-25T13:54:36Z",
+    "updated_at": "2026-05-25T13:55:00Z",
+    "duration_seconds": 24,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26404070005"
+  },
+  {
+    "run_id": 26403984820,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-05-25T13:52:45Z",
+    "updated_at": "2026-05-25T13:53:21Z",
+    "duration_seconds": 36,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/26403984820"
+  }
+]
