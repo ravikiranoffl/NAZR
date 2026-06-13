@@ -1,5 +1,15 @@
 [
   {
+    "run_id": 27458974491,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-06-13T06:23:07Z",
+    "updated_at": "2026-06-13T06:23:23Z",
+    "duration_seconds": 16,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/RULE/actions/runs/27458974491"
+  },
+  {
     "run_id": 27399693872,
     "status": "completed",
     "conclusion": "success",
