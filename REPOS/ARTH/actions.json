@@ -1,5 +1,15 @@
 [
   {
+    "run_id": 28195161756,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-06-25T19:28:05Z",
+    "updated_at": "2026-06-25T19:28:25Z",
+    "duration_seconds": 20,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/ARTH/actions/runs/28195161756"
+  },
+  {
     "run_id": 28162055155,
     "status": "completed",
     "conclusion": "success",
