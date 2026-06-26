@@ -1,5 +1,15 @@
 [
   {
+    "run_id": 28244204396,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-06-26T14:23:24Z",
+    "updated_at": "2026-06-26T14:23:42Z",
+    "duration_seconds": 18,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/28244204396"
+  },
+  {
     "run_id": 28233403222,
     "status": "completed",
     "conclusion": "success",
