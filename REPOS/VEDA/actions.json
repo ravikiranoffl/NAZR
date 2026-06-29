@@ -1,5 +1,25 @@
 [
   {
+    "run_id": 28394356501,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-06-29T18:35:23Z",
+    "updated_at": "2026-06-29T18:36:33Z",
+    "duration_seconds": 70,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/VEDA/actions/runs/28394356501"
+  },
+  {
+    "run_id": 28393681827,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-06-29T18:23:20Z",
+    "updated_at": "2026-06-29T18:35:25Z",
+    "duration_seconds": 725,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/VEDA/actions/runs/28393681827"
+  },
+  {
     "run_id": 28373602214,
     "status": "completed",
     "conclusion": "success",
