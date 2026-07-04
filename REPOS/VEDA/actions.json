@@ -1,5 +1,15 @@
 [
   {
+    "run_id": 28686273539,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-07-03T22:36:44Z",
+    "updated_at": "2026-07-03T22:38:06Z",
+    "duration_seconds": 82,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/VEDA/actions/runs/28686273539"
+  },
+  {
     "run_id": 28684222371,
     "status": "in_progress",
     "conclusion": null,
