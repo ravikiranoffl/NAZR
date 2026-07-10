@@ -1,5 +1,15 @@
 [
   {
+    "run_id": 29109794516,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-07-10T17:06:25Z",
+    "updated_at": "2026-07-10T17:18:22Z",
+    "duration_seconds": 717,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/TGCA/actions/runs/29109794516"
+  },
+  {
     "run_id": 29057247142,
     "status": "completed",
     "conclusion": "success",
