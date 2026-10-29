@@ -1,5 +1,25 @@
 [
   {
+    "run_id": 40766307529,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-10-28T20:46:52Z",
+    "updated_at": "2026-10-28T20:47:48Z",
+    "duration_seconds": 56,
+    "trigger_event": "dynamic",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/40766307529"
+  },
+  {
+    "run_id": 40766260268,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-10-28T20:46:32Z",
+    "updated_at": "2026-10-28T20:46:53Z",
+    "duration_seconds": 21,
+    "trigger_event": "schedule",
+    "html_url": "https://github.com/ravikiranoffl/MARG/actions/runs/40766260268"
+  },
+  {
     "run_id": 40710847386,
     "status": "completed",
     "conclusion": "success",
